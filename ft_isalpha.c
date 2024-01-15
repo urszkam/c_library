@@ -1,10 +1,6 @@
-int ft_isalpha(char *str)
+int ft_isalpha(int c)
 {
-    while (*str)
-    {
-        if (*str < 'A' || *str > 'z' || (*str > 'Z' && *str < 'a'))
-            return (0);
-        str++;
-    }
+    if (c < 'A' || c > 'z' || (c > 'Z' && c < 'a'))
+        return (0);
     return (1);
 }

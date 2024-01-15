@@ -1,12 +1,7 @@
-int ft_isalnum(char *str)
+int ft_isalnum(int c)
 {
-    while (*str)
-    {
-        if ((*str >= '0' && *str <= '9') || (*str >= 'a' && *str <= 'z') 
-            || (*str >= 'A' && *str <= 'Z'))
-            str++;
-        else:
-            return (0);
-    }
-    return (1);
+    if ((c >= '0' && c <= '9') || (c >= 'a' && c <= 'z') 
+        || (c >= 'A' && c <= 'Z'))
+        return (1);
+    return (0);
 }
