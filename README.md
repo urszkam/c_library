@@ -77,7 +77,7 @@ Ensure you have the following installed on your system:
 Clone the libft repository to your local machine:
 
 ```bash
-git clone <repository_url>
+git clone https://github.com/urszkam/c_library.git libft
 ```
 
 ## Build the Library
