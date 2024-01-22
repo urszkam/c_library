@@ -96,6 +96,11 @@ In your C source code file, include the libft.h header file at the beginning to 
 ```c
 #include "libft.h"
 ```
+Then compile your main program using the command:
+
+```bash
+cc -o my_program main.c -L. -lft -I./
+```
 
 ## Cleanup
 If needed, you can clean the generated files using:
