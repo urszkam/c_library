@@ -19,28 +19,102 @@ int clean_suite() {
 }
 
 /* Function Tests */ 
-void test_ft_isalpha() {
-    // Test case 1: Check if ft_isalpha returns the correct int for an alphabetic string
-    size_t result1 = ft_isalpha("Hello");
-    size_t expected1 = 1;
+
+void test_ft_isalnum() {
+    // Test case 1: alphabetic char
+    int result1 = ft_isalnum('H');
+    int expected1 = 1;
     CU_ASSERT_EQUAL_FATAL(result1, expected1);
-    printf("Test 1: ft_isalpha(\"Hello\") - Result: %d, Expected: %d - %s\n",
+    printf("Test 1: ft_isalnum('H') - Result: %d, Expected: %d - %s\n",
         result1, expected1, (result1 == expected1) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
 
-    // Test case 2: Check if ft_isalpha returns the correct int for a non-alphabetic string
-    size_t result2 = ft_isalpha("Hello World!!!");
-    size_t expected2 = 0;
+    // Test case 2: numeric char
+    int result2 = ft_isalnum('3');
+    int expected2 = 0;
+    CU_ASSERT_EQUAL_FATAL(result2, expected2);
+    printf("Test 2: ft_isalnum(\"Hello World123!!!\") - Result: %d, Expected: %d - %s\n",
+        result2, expected2, (result2 == expected2) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
+
+    // Test case 3: non-alphanum char
+    int result3 = ft_isalnum('!');
+    int expected3 = 0;
+    CU_ASSERT_EQUAL_FATAL(result3, expected3);
+    printf("Test 3: ft_isalnum(!) - Result: %d, Expected: %d - %s\n",
+        result3, expected3, (result3 == expected3) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
+
+    // Test case 4: empty char
+    int result4 = ft_isalnum('');
+    int expected4 = 0;
+    CU_ASSERT_EQUAL_FATAL(result4, expected4);
+    printf("Test 4: ft_isalnum('') - Result: %d, Expected: %d - %s\n",
+        result4, expected4, (result4 == expected4) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
+
+    // Test case 4: non-alphanum char
+    int result4 = ft_isalnum('!');
+    int expected4 = 0;
+    CU_ASSERT_EQUAL_FATAL(result4, expected4);
+    printf("Test 2: ft_isalnum('!') - Result: %d, Expected: %d - %s\n",
+        result4, expected4, (result4 == expected4) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
+}
+
+void test_ft_isalpha() {
+    // Test case 1: lower case char
+    int result1 = ft_isalpha('h');
+    int expected1 = 1;
+    CU_ASSERT_EQUAL_FATAL(result1, expected1);
+    printf("Test 1: ft_isalpha(h) - Result: %d, Expected: %d - %s\n",
+        result1, expected1, (result1 == expected1) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
+
+    // Test case 2: upper case char
+    int result2 = ft_isalpha('H');
+    int expected2 = 0;
     CU_ASSERT_EQUAL_FATAL(result2, expected2);
     printf("Test 2: ft_isalpha(\"Hello World!!!\") - Result: %d, Expected: %d - %s\n",
         result2, expected2, (result2 == expected2) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
 
     // Test case 3: Check if ft_isalpha returns the correct int for a NULL
-    size_t result3 = ft_strlen(0);
-    size_t expected3 = 0;
+    int result3 = ft_isalpha(0);
+    int expected3 = 0;
     CU_ASSERT_EQUAL_FATAL(result3, expected3);
     printf("Test 3: ft_isalpha(0) - Result: %d, Expected: %d - %s\n",
         result3, expected3, (result3 == expected3) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
+}
 
+void test_ft_isascii() {
+    // Test case 1: ascii char: ~
+    int result1 = ft_isascii(127);
+    int expected1 = 1;
+    CU_ASSERT_EQUAL_FATAL(result1, expected1);
+    printf("Test 1: ft_isascii('~') - Result: %d, Expected: %d - %s\n",
+        result1, expected1, (result1 == expected1) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
+
+    // Test case 2: ascii char: \t
+    int result2 = ft_isascii('\t');
+    int expected2 = 1;
+    CU_ASSERT_EQUAL_FATAL(result2, expected2);
+    printf("Test 2: ft_isascii('\t') - Result: %d, Expected: %d - %s\n",
+        result2, expected2, (result2 == expected2) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
+
+    // Test case 3: NULL
+    int result3 = ft_isascii(0);
+    int expected3 = 1;
+    CU_ASSERT_EQUAL_FATAL(result3, expected3);
+    printf("Test 3: ft_isascii(0) - Result: %d, Expected: %d - %s\n",
+        result3, expected3, (result3 == expected3) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
+
+    // Test case 4: non-ascii char: below the lower limit
+    int result4 = ft_isascii(-20);
+    int expected4 = 0;
+    CU_ASSERT_EQUAL_FATAL(result4, expected4);
+    printf("Test 4: ft_isascii(-20) - Result: %d, Expected: %d - %s\n",
+        result4, expected4, (result4 == expected4) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
+
+    // Test case 5: non-ascii char: above the upper limit
+    int result5 = ft_isascii(128);
+    int expected5 = 0;
+    CU_ASSERT_EQUAL_FATAL(result5, expected5);
+    printf("Test 5: ft_isascii(120) - Result: %d, Expected: %d - %s\n",
+        result5, expected5, (result5 == expected5) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
 }
 
 void test_ft_strlen() {
@@ -57,6 +131,13 @@ void test_ft_strlen() {
     CU_ASSERT_EQUAL_FATAL(result2, expected2);
     printf("Test 2: ft_strlen(\"\") - Result: %zu, Expected: %zu - %s\n", 
         result2, expected2, (result2 == expected2) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
+
+    // Test case 3: NULLing
+    size_t result3 = ft_strlen(0);
+    size_t expected3 = 0;
+    CU_ASSERT_EQUAL_FATAL(result3, expected3);
+    printf("Test 3: ft_strlen(0) - Result: %zu, Expected: %zu - %s\n", 
+        result3, expected3, (result3 == expected3) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
 }
 
 void test_ft_strrchr() {
@@ -90,7 +171,9 @@ int main() {
     // Add your test functions to the suite
     CU_add_test(suite, "test_ft_strlen", test_ft_strlen);
     CU_add_test(suite, "test_ft_strrchr", test_ft_strrchr);
+    CU_add_test(suite, "test_ft_isalnum", test_ft_isalnum);
     CU_add_test(suite, "test_ft_isalpha", test_ft_isalpha);
+    CU_add_test(suite, "test_ft_isascii", test_ft_isascii);
 
     // Run the tests
     CU_basic_set_mode(CU_BRM_VERBOSE);
