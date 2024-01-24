@@ -62,21 +62,51 @@ void test_ft_isalpha() {
     int result1 = ft_isalpha('h');
     int expected1 = 1;
     CU_ASSERT_EQUAL_FATAL(result1, expected1);
-    printf("Test 1: ft_isalpha(h) - Result: %d, Expected: %d - %s\n",
+    printf("Test 1: ft_isalpha('h') - Result: %d, Expected: %d - %s\n",
         result1, expected1, (result1 == expected1) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
 
     // Test case 2: upper case char
     int result2 = ft_isalpha('H');
-    int expected2 = 0;
+    int expected2 = 1;
     CU_ASSERT_EQUAL_FATAL(result2, expected2);
-    printf("Test 2: ft_isalpha(\"Hello World!!!\") - Result: %d, Expected: %d - %s\n",
+    printf("Test 2: ft_isalpha('H') - Result: %d, Expected: %d - %s\n",
         result2, expected2, (result2 == expected2) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
 
-    // Test case 3: Check if ft_isalpha returns the correct int for a NULL
-    int result3 = ft_isalpha(0);
+    // Test case 3: non-alpha char
+    int result3 = ft_isalpha('9');
     int expected3 = 0;
     CU_ASSERT_EQUAL_FATAL(result3, expected3);
-    printf("Test 3: ft_isalpha(0) - Result: %d, Expected: %d - %s\n",
+    printf("Test 3: ft_isalpha('9') - Result: %d, Expected: %d - %s\n",
+        result3, expected3, (result3 == expected3) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
+
+    // Test case 4: NULL
+    int result4 = ft_isalpha(0);
+    int expected4 = 0;
+    CU_ASSERT_EQUAL_FATAL(result4, expected4);
+    printf("Test 4: ft_isalpha(0) - Result: %d, Expected: %d - %s\n",
+        result4, expected4, (result4 == expected4) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
+}
+
+void test_ft_isdigit() {
+    // Test case 1: digit
+    int result1 = ft_isdigit('9');
+    int expected1 = 1;
+    CU_ASSERT_EQUAL_FATAL(result1, expected1);
+    printf("Test 1: ft_isdigit(9) - Result: %d, Expected: %d - %s\n",
+        result1, expected1, (result1 == expected1) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
+
+    // Test case 2: non-digit char
+    int result2 = ft_isdigit('H');
+    int expected2 = 0;
+    CU_ASSERT_EQUAL_FATAL(result2, expected2);
+    printf("Test 2: ft_isdigit('H') - Result: %d, Expected: %d - %s\n",
+        result2, expected2, (result2 == expected2) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
+
+    // Test case 3: NULL
+    int result3 = ft_isdigit(0);
+    int expected3 = 0;
+    CU_ASSERT_EQUAL_FATAL(result3, expected3);
+    printf("Test 3: ft_isdigit(0) - Result: %d, Expected: %d - %s\n",
         result3, expected3, (result3 == expected3) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
 }
 
@@ -174,6 +204,7 @@ int main() {
     CU_add_test(suite, "test_ft_isalnum", test_ft_isalnum);
     CU_add_test(suite, "test_ft_isalpha", test_ft_isalpha);
     CU_add_test(suite, "test_ft_isascii", test_ft_isascii);
+    CU_add_test(suite, "test_ft_isdigit", test_ft_isdigit);
 
     // Run the tests
     CU_basic_set_mode(CU_BRM_VERBOSE);
