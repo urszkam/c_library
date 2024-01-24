@@ -87,29 +87,6 @@ void test_ft_isalpha() {
         result4, expected4, (result4 == expected4) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
 }
 
-void test_ft_isdigit() {
-    // Test case 1: digit
-    int result1 = ft_isdigit('9');
-    int expected1 = 1;
-    CU_ASSERT_EQUAL_FATAL(result1, expected1);
-    printf("Test 1: ft_isdigit(9) - Result: %d, Expected: %d - %s\n",
-        result1, expected1, (result1 == expected1) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
-
-    // Test case 2: non-digit char
-    int result2 = ft_isdigit('H');
-    int expected2 = 0;
-    CU_ASSERT_EQUAL_FATAL(result2, expected2);
-    printf("Test 2: ft_isdigit('H') - Result: %d, Expected: %d - %s\n",
-        result2, expected2, (result2 == expected2) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
-
-    // Test case 3: NULL
-    int result3 = ft_isdigit(0);
-    int expected3 = 0;
-    CU_ASSERT_EQUAL_FATAL(result3, expected3);
-    printf("Test 3: ft_isdigit(0) - Result: %d, Expected: %d - %s\n",
-        result3, expected3, (result3 == expected3) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
-}
-
 void test_ft_isascii() {
     // Test case 1: ascii char: ~
     int result1 = ft_isascii(127);
@@ -144,6 +121,66 @@ void test_ft_isascii() {
     int expected5 = 0;
     CU_ASSERT_EQUAL_FATAL(result5, expected5);
     printf("Test 5: ft_isascii(120) - Result: %d, Expected: %d - %s\n",
+        result5, expected5, (result5 == expected5) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
+}
+
+void test_ft_isdigit() {
+    // Test case 1: digit
+    int result1 = ft_isdigit('9');
+    int expected1 = 1;
+    CU_ASSERT_EQUAL_FATAL(result1, expected1);
+    printf("Test 1: ft_isdigit(9) - Result: %d, Expected: %d - %s\n",
+        result1, expected1, (result1 == expected1) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
+
+    // Test case 2: non-digit char
+    int result2 = ft_isdigit('H');
+    int expected2 = 0;
+    CU_ASSERT_EQUAL_FATAL(result2, expected2);
+    printf("Test 2: ft_isdigit('H') - Result: %d, Expected: %d - %s\n",
+        result2, expected2, (result2 == expected2) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
+
+    // Test case 3: NULL
+    int result3 = ft_isdigit(0);
+    int expected3 = 0;
+    CU_ASSERT_EQUAL_FATAL(result3, expected3);
+    printf("Test 3: ft_isdigit(0) - Result: %d, Expected: %d - %s\n",
+        result3, expected3, (result3 == expected3) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
+}
+
+void test_ft_isprint() {
+    // Test case 1: space
+    int result1 = ft_isprint(32);
+    int expected1 = 1;
+    CU_ASSERT_EQUAL_FATAL(result1, expected1);
+    printf("Test 1: ft_isprint(32) - Result: %d, Expected: %d - %s\n",
+        result1, expected1, (result1 == expected1) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
+
+    // Test case 2: non-digit char
+    int result2 = ft_isprint(127);
+    int expected2 = 1;
+    CU_ASSERT_EQUAL_FATAL(result2, expected2);
+    printf("Test 2: ft_isprint(127) - Result: %d, Expected: %d - %s\n",
+        result2, expected2, (result2 == expected2) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
+
+    // Test case 3: under the lover limit
+    int result3 = ft_isprint('\t');
+    int expected3 = 0;
+    CU_ASSERT_EQUAL_FATAL(result3, expected3);
+    printf("Test 3: ft_isprint('\t') - Result: %d, Expected: %d - %s\n",
+        result3, expected3, (result3 == expected3) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
+
+    // Test case 4: above the upper limit
+    int result4 = ft_isprint(128);
+    int expected4 = 0;
+    CU_ASSERT_EQUAL_FATAL(result4, expected4);
+    printf("Test 4: ft_isprint(128) - Result: %d, Expected: %d - %s\n",
+        result4, expected4, (result4 == expected4) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
+
+    // Test case 5: NULL
+    int result5 = ft_isprint(0);
+    int expected5 = 0;
+    CU_ASSERT_EQUAL_FATAL(result5, expected5);
+    printf("Test 5: ft_isprint(0) - Result: %d, Expected: %d - %s\n",
         result5, expected5, (result5 == expected5) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
 }
 
@@ -205,6 +242,7 @@ int main() {
     CU_add_test(suite, "test_ft_isalpha", test_ft_isalpha);
     CU_add_test(suite, "test_ft_isascii", test_ft_isascii);
     CU_add_test(suite, "test_ft_isdigit", test_ft_isdigit);
+    CU_add_test(suite, "test_ft_isprint", test_ft_isdigit);
 
     // Run the tests
     CU_basic_set_mode(CU_BRM_VERBOSE);
