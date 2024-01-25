@@ -287,9 +287,45 @@ void test_ft_strchr() {
     char* expected3 = strchr("x", 'x');
     CU_ASSERT_PTR_EQUAL_FATAL(result3, expected3);
     printf("Test 3: ft_strchr(\"x\", 'x') - Result: %p, Expected: %p - %s\n",
+        (void*)result3, (void*)expected3, (result3 == expected3) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
+
+    // Test case 4: char is \0
+    char* result4 = ft_strchr("Hello World!", '\0');
+    char* expected4 = strchr("Hello World!", '\0');
+    CU_ASSERT_PTR_EQUAL_FATAL(result4, expected4);
+    printf("Test 4: ft_strchr(\"Hello World!\", 'o') - Result: %p, Expected: %p - %s\n",
+        (void*)result4, (void*)expected4, (result4 == expected4) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
+
+    // Test case 5: string is NULL
+    char* result5 = ft_strchr(0, 'o');
+    char* expected5 = strchr(0, 'o');
+    CU_ASSERT_PTR_EQUAL_FATAL(result5, expected5);
+    printf("Test 5: ft_strchr(NULL, 'o') - Result: %p, Expected: %p - %s\n",
+        (void*)result5, (void*)expected5, (result5 == expected5) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
+}
+
+void test_ft_strchr() {
+    // Test case 1: existing character
+    char* result1 = ft_strchr("Hello World!", 'o');
+    char* expected1 = strchr("Hello World!", 'o');
+    CU_ASSERT_PTR_EQUAL_FATAL(result1, expected1);
+    printf("Test 1: ft_strchr(\"Hello World!\", 'o') - Result: %p, Expected: %p - %s\n",
         (void*)result1, (void*)expected1, (result1 == expected1) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
 
-    // Test case 4: char is the \0 sing
+    // Test case 2: character not found in the string
+    char* result2 = ft_strchr("Hello World!", 'x');
+    CU_ASSERT_PTR_NULL_FATAL(result2);
+    printf("Test 2: ft_strchr(\"Hello World!\", 'x') - Result: %p, Expected: NULL - %s\n",
+        (void*)result2, (result2 == NULL) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
+
+    // Test case 3: char is the only char in the string
+    char* result3 = ft_strchr("x", 'x');
+    char* expected3 = strchr("x", 'x');
+    CU_ASSERT_PTR_EQUAL_FATAL(result3, expected3);
+    printf("Test 3: ft_strchr(\"x\", 'x') - Result: %p, Expected: %p - %s\n",
+        (void*)result3, (void*)expected3, (result3 == expected3) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
+
+    // Test case 4: char is \0
     char* result4 = ft_strchr("Hello World!", '\0');
     char* expected4 = strchr("Hello World!", '\0');
     CU_ASSERT_PTR_EQUAL_FATAL(result4, expected4);
@@ -323,9 +359,9 @@ void test_ft_strrchr() {
     char* expected3 = strrchr("x", 'x');
     CU_ASSERT_PTR_EQUAL_FATAL(result3, expected3);
     printf("Test 3: ft_strrchr(\"x\", 'x') - Result: %p, Expected: %p - %s\n",
-        (void*)result1, (void*)expected1, (result1 == expected1) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
+        (void*)result3, (void*)expected3, (result3 == expected3) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
 
-    // Test case 4: char is the \0 sing
+    // Test case 4: char is \0
     char* result4 = ft_strrchr("Hello World!", '\0');
     char* expected4 = strrchr("Hello World!", '\0');
     CU_ASSERT_PTR_EQUAL_FATAL(result4, expected4);
@@ -338,6 +374,43 @@ void test_ft_strrchr() {
     CU_ASSERT_PTR_EQUAL_FATAL(result5, expected5);
     printf("Test 5: ft_strrchr(NULL, 'o') - Result: %p, Expected: %p - %s\n",
         (void*)result5, (void*)expected5, (result5 == expected5) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
+}
+
+void test_ft_strncmp() {
+    // Test case 1: existing character
+    int result1 = ft_strncmp("HeLlo", "Hello", 7);
+    int expected1 = strncmp("HeLlo", "Hello", 7);
+    CU_ASSERT_EQUAL_FATAL(result1, expected1);
+    printf("Test 1: ft_strncmp(\"HeLlo\", \"Hello\", 7) - Result: %d, Expected: %d - %s\n",
+        result1, expected1, (result1 == expected1) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
+
+    // Test case 2: character not found in the string
+    int result2 = ft_strncmp("HeLlo", "Hello", 0);
+    int expected2 = strncmp("HeLlo", "Hello", 0);
+    CU_ASSERT_EQUAL_FATAL(result2, expected2);
+    printf("Test 2: ft_strncmp(\"HeLlo\", \"Hello\", 0) - Result: %d, Expected: %d - %s\n",
+        result2, expected2, (result2 == expected2) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
+
+    // Test case 3: intis the only intin the string
+    int result3 = ft_strncmp("Hello", "HeLlo", 7);
+    int expected3 = strncmp("Hello", "HeLlo", 7);
+    CU_ASSERT_EQUAL_FATAL(result3, expected3);
+    printf("Test 3: ft_strncmp(\"HeLlo\", \"Hello\", 7) - Result: %d, Expected: %d - %s\n",
+        result3, expected3, (result3 == expected3) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
+
+    // Test case 4: intis \0
+    int result4 = ft_strncmp("Hello", "Hello", 7);
+    int expected4 = strncmp("Hello", "Hello", 7);
+    CU_ASSERT_PTR_EQUAL_FATAL(result4, expected4);
+    printf("Test 4: ft_strncmp(\"HeLlo\", \"Hello\", 7) - Result: %d, Expected: %d - %s\n",
+        result4, expected4, (result4 == expected4) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
+
+    // Test case 5: string is NULL
+    int result5 = ft_strncmp("", "Hell", 2);
+    int expected5 = strncmp("", "Hell", 2);
+    CU_ASSERT_PTR_EQUAL_FATAL(result5, expected5);
+    printf("Test 5: ft_strncmp(\"\", \"Hell\", 2) - Result: %d, Expected: %d - %s\n",
+        result5, expected5, (result5 == expected5) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
 }
 
 int main() {
@@ -354,13 +427,17 @@ int main() {
     }
 
     // Add your test functions to the suite
-    CU_add_test(suite, "test_ft_strlen", test_ft_strlen);
-    CU_add_test(suite, "test_ft_strrchr", test_ft_strrchr);
     CU_add_test(suite, "test_ft_isalnum", test_ft_isalnum);
     CU_add_test(suite, "test_ft_isalpha", test_ft_isalpha);
     CU_add_test(suite, "test_ft_isascii", test_ft_isascii);
     CU_add_test(suite, "test_ft_isdigit", test_ft_isdigit);
     CU_add_test(suite, "test_ft_isprint", test_ft_isdigit);
+    CU_add_test(suite, "test_ft_toupper", test_ft_toupper);
+    CU_add_test(suite, "test_ft_tolower", test_ft_tolower);
+    CU_add_test(suite, "test_ft_strlen", test_ft_strlen);
+    CU_add_test(suite, "test_ft_strchr", test_ft_strrchr);
+    CU_add_test(suite, "test_ft_strrchr", test_ft_strrchr);
+    CU_add_test(suite, "test_ft_strncmp", test_ft_strrchr);
 
     // Run the tests
     CU_basic_set_mode(CU_BRM_VERBOSE);
