@@ -209,14 +209,14 @@ void test_ft_strlen() {
 }
 
 void test_ft_toupper() {
-    // Test case 1: lower case
+    // Test case 1: lower case char
     char result1 = ft_toupper('h');
     char expected1 = toupper('h');
     CU_ASSERT_EQUAL_FATAL(result1, expected1);
     printf("Test 1: ft_toupper('h') - Result: %c, Expected: %c - %s\n",
         result1, expected1, (result1 == expected1) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
 
-    // Test case 2: non-digit char
+    // Test case 2: upper case char
     char result2 = ft_toupper('H');
     char expected2 = toupper('H');
     CU_ASSERT_EQUAL_FATAL(result2, expected2);
@@ -234,7 +234,37 @@ void test_ft_toupper() {
     char result4 = ft_toupper('@');
     char expected4 = toupper('@');
     CU_ASSERT_EQUAL_FATAL(result4, expected4);
-    printf("Test 4: ft_toupper(0) - Result: %c, Expected: %c - %s\n",
+    printf("Test 4: ft_toupper(@) - Result: %c, Expected: %c - %s\n",
+        result4, expected4, (result4 == expected4) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
+}
+
+void test_ft_tolower() {
+    // Test case 1: upper case
+    char result1 = ft_tolower('H');
+    char expected1 = tolower('H');
+    CU_ASSERT_EQUAL_FATAL(result1, expected1);
+    printf("Test 1: ft_tolower('H') - Result: %c, Expected: %c - %s\n",
+        result1, expected1, (result1 == expected1) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
+
+    // Test case 2: lower case char
+    char result2 = ft_tolower('h');
+    char expected2 = tolower('h');
+    CU_ASSERT_EQUAL_FATAL(result2, expected2);
+    printf("Test 2: ft_tolower('h') - Result: %c, Expected: %c - %s\n",
+        result2, expected2, (result2 == expected2) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
+
+    // Test case 3: NULL
+    char result3 = ft_tolower(0);
+    char expected3 = tolower(0);
+    CU_ASSERT_EQUAL_FATAL(result3, expected3);
+    printf("Test 3: ft_tolower(0) - Result: %c, Expected: %c - %s\n",
+        result3, expected3, (result3 == expected3) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
+
+    // Test case 4: non-alpha char
+    char result4 = ft_tolower('@');
+    char expected4 = tolower('@');
+    CU_ASSERT_EQUAL_FATAL(result4, expected4);
+    printf("Test 4: ft_tolower('@') - Result: %c, Expected: %c - %s\n",
         result4, expected4, (result4 == expected4) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
 }
 
