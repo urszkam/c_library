@@ -1,6 +1,7 @@
 #include "libft.h"
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 #include "CUnit/Basic.h"
 
 #define RED     "\x1b[31m"
@@ -129,7 +130,7 @@ void test_ft_isdigit() {
     int result1 = ft_isdigit('9');
     int expected1 = 1;
     CU_ASSERT_EQUAL_FATAL(result1, expected1);
-    printf("Test 1: ft_isdigit(9) - Result: %d, Expected: %d - %s\n",
+    printf("Test 1: ft_isdigit('9') - Result: %d, Expected: %d - %s\n",
         result1, expected1, (result1 == expected1) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
 
     // Test case 2: non-digit char
@@ -205,6 +206,36 @@ void test_ft_strlen() {
     CU_ASSERT_EQUAL_FATAL(result3, expected3);
     printf("Test 3: ft_strlen(0) - Result: %zu, Expected: %zu - %s\n", 
         result3, expected3, (result3 == expected3) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
+}
+
+void test_ft_toupper() {
+    // Test case 1: lower case
+    char result1 = ft_toupper('h');
+    char expected1 = toupper('h');
+    CU_ASSERT_EQUAL_FATAL(result1, expected1);
+    printf("Test 1: ft_toupper('h') - Result: %c, Expected: %c - %s\n",
+        result1, expected1, (result1 == expected1) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
+
+    // Test case 2: non-digit char
+    char result2 = ft_toupper('H');
+    char expected2 = toupper('H');
+    CU_ASSERT_EQUAL_FATAL(result2, expected2);
+    printf("Test 2: ft_toupper('H') - Result: %c, Expected: %c - %s\n",
+        result2, expected2, (result2 == expected2) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
+
+    // Test case 3: NULL
+    char result3 = ft_toupper(0);
+    char expected3 = toupper(0);
+    CU_ASSERT_EQUAL_FATAL(result3, expected3);
+    printf("Test 3: ft_toupper(0) - Result: %c, Expected: %c - %s\n",
+        result3, expected3, (result3 == expected3) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
+
+    // Test case 4: non-alpha char
+    char result4 = ft_toupper('@');
+    char expected4 = toupper('@');
+    CU_ASSERT_EQUAL_FATAL(result4, expected4);
+    printf("Test 4: ft_toupper(0) - Result: %c, Expected: %c - %s\n",
+        result4, expected4, (result4 == expected4) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
 }
 
 void test_ft_strchr() {
