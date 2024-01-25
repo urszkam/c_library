@@ -401,14 +401,14 @@ void test_ft_strncmp() {
     // Test case 4: intis \0
     int result4 = ft_strncmp("Hello", "Hello", 7);
     int expected4 = strncmp("Hello", "Hello", 7);
-    CU_ASSERT_PTR_EQUAL_FATAL(result4, expected4);
+    CU_ASSERT_EQUAL_FATAL(result4, expected4);
     printf("Test 4: ft_strncmp(\"HeLlo\", \"Hello\", 7) - Result: %d, Expected: %d - %s\n",
         result4, expected4, (result4 == expected4) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
 
     // Test case 5: string is NULL
     int result5 = ft_strncmp("", "Hell", 2);
     int expected5 = strncmp("", "Hell", 2);
-    CU_ASSERT_PTR_EQUAL_FATAL(result5, expected5);
+    CU_ASSERT_EQUAL_FATAL(result5, expected5);
     printf("Test 5: ft_strncmp(\"\", \"Hell\", 2) - Result: %d, Expected: %d - %s\n",
         result5, expected5, (result5 == expected5) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
 }
