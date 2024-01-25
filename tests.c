@@ -207,6 +207,42 @@ void test_ft_strlen() {
         result3, expected3, (result3 == expected3) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
 }
 
+void test_ft_strchr() {
+    // Test case 1: existing character
+    char* result1 = ft_strchr("Hello World!", 'o');
+    char* expected1 = strchr("Hello World!", 'o');
+    CU_ASSERT_PTR_EQUAL_FATAL(result1, expected1);
+    printf("Test 1: ft_strchr(\"Hello World!\", 'o') - Result: %p, Expected: %p - %s\n",
+        (void*)result1, (void*)expected1, (result1 == expected1) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
+
+    // Test case 2: character not found in the string
+    char* result2 = ft_strchr("Hello World!", 'x');
+    CU_ASSERT_PTR_NULL_FATAL(result2);
+    printf("Test 2: ft_strchr(\"Hello World!\", 'x') - Result: %p, Expected: NULL - %s\n",
+        (void*)result2, (result2 == NULL) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
+
+    // Test case 3: char is the only char in the string
+    char* result3 = ft_strchr("x", 'x');
+    char* expected3 = strchr("x", 'x');
+    CU_ASSERT_PTR_EQUAL_FATAL(result3, expected3);
+    printf("Test 3: ft_strchr(\"x\", 'x') - Result: %p, Expected: %p - %s\n",
+        (void*)result1, (void*)expected1, (result1 == expected1) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
+
+    // Test case 4: char is the \0 sing
+    char* result4 = ft_strchr("Hello World!", '\0');
+    char* expected4 = strchr("Hello World!", '\0');
+    CU_ASSERT_PTR_EQUAL_FATAL(result4, expected4);
+    printf("Test 4: ft_strchr(\"Hello World!\", 'o') - Result: %p, Expected: %p - %s\n",
+        (void*)result4, (void*)expected4, (result4 == expected4) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
+
+    // Test case 5: string is NULL
+    char* result5 = ft_strchr(0, 'o');
+    char* expected5 = strchr(0, 'o');
+    CU_ASSERT_PTR_EQUAL_FATAL(result5, expected5);
+    printf("Test 5: ft_strchr(NULL, 'o') - Result: %p, Expected: %p - %s\n",
+        (void*)result5, (void*)expected5, (result5 == expected5) ? GREEN "PASS" : RED "FAIL", COLOR_RESET);
+}
+
 void test_ft_strrchr() {
     // Test case 1: existing character
     char* result1 = ft_strrchr("Hello World!", 'o');
