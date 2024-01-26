@@ -44,4 +44,4 @@ bonus-tests:
 	@./bonus_tests.out
 	@rm -f bonus_tests.out
 
-.PHONY: clean fclean re all
+.PHONY: clean fclean re all tests bonus_tests
