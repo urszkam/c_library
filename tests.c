@@ -787,6 +787,28 @@ void test_ft_strmapi()
        free(result2);
 }
 
+void test_ft_striteri()
+{
+       // Test case 1
+       char result1[] = "aaaaaabbbbaa!";
+       char *expected1 = "XaXaXabbbbXa!";
+       ft_striteri(result1, &a_to_X);
+       CU_ASSERT_STRING_EQUAL(result1, expected1);
+       printf("Test 1: ft_striteri(\"Hdjik!\", &a_to_X) - Result: %s, Expected: %s - %s\n",
+              result1, expected1,
+              strcmp(result1, expected1) == 0 ? GREEN "PASS" COLOR_RESET
+                                              : RED "FAIL" COLOR_RESET);
+
+       // Test case 2
+       char result2[] = "";
+       ft_striteri(result2, &a_to_X);
+       CU_ASSERT_STRING_EQUAL(result2, "");
+       printf("Test 2: ft_striteri(\"\", &a_to_X) - Result: %s, Expected: \"\" - %s\n",
+              result2,
+              strcmp(result2, "") == 0 ? GREEN "PASS" COLOR_RESET
+                                       : RED "FAIL" COLOR_RESET);
+}
+
 int main()
 {
        // Initialize CUnit test registry
