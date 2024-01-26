@@ -666,6 +666,49 @@ void test_ft_strtrim()
        free(result4);
 }
 
+void test_ft_atoi()
+{
+       // Test case 1: Positive integer
+       int result1 = ft_atoi("\t\v +123");
+       int expected1 = atoi("\t\v +123");
+       printf("Test 1: ft_atoi(\"\\t\\v +123\") - Result: %d, Expected: %d - %s\n",
+              result1, expected1,
+              (result1 == expected1) ? GREEN "PASS" COLOR_RESET
+                                     : RED "FAIL" COLOR_RESET);
+
+       // Test case 2: Negative integer
+       int result2 = ft_atoi("-456abc");
+       int expected2 = atoi("-456abc");
+       printf("Test 2: ft_atoi(\"-456abc\") - Result: %d, Expected: %d - %s\n",
+              result2, expected2,
+              (result2 == expected2) ? GREEN "PASS" COLOR_RESET
+                                     : RED "FAIL" COLOR_RESET);
+
+       // Test case 3: Zero
+       int result3 = ft_atoi("0");
+       int expected3 = atoi("0");
+       printf("Test 3: ft_atoi(\"0\") - Result: %d, Expected: %d - %s\n",
+              result3, expected3,
+              (result3 == expected3) ? GREEN "PASS" COLOR_RESET
+                                     : RED "FAIL" COLOR_RESET);
+
+       // Test case 4: Non-numeric input
+       int result4 = ft_atoi("abc");
+       int expected4 = atoi("abc");
+       printf("Test 4: ft_atoi(\"abc\") - Result: %d, Expected: %d - %s\n",
+              result4, expected4,
+              (result4 == expected4) ? GREEN "PASS" COLOR_RESET
+                                     : RED "FAIL" COLOR_RESET);
+
+       // Test case 5: Overflow
+       int result5 = ft_atoi("2147483648"); // Beyond INT_MAX
+       int expected5 = atoi("2147483648");
+       printf("Test 5: ft_atoi(\"2147483648\") - Result: %d, Expected: %d - %s\n",
+              result5, expected5,
+              (result5 == expected5) ? GREEN "PASS" COLOR_RESET
+                                     : RED "FAIL" COLOR_RESET);
+}
+
 int main()
 {
        // Initialize CUnit test registry
