@@ -13,6 +13,8 @@ char *ft_strtrim(char const *s1, char const *set)
 
     if (!s1)
         return (0);
+    if (!set)
+        return ((char *) s1);
     start = 0;
     end = ft_strlen(s1) - 1;
     while (s1[start] && ft_strchr(set, s1[start]))
