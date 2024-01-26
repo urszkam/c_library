@@ -7,8 +7,8 @@
 
 int ft_atoi(const char *nptr)
 {
-    long res;
-    int sign;
+    long    res;
+    int     sign;
 
     while ((*nptr >= 9 && *nptr <= 13) || *nptr == 32)
         nptr++;
@@ -27,15 +27,3 @@ int ft_atoi(const char *nptr)
     }
     return (res * sign);
 }
-
-// int main(int i, char **c)
-// {
-//     if (i == 2)
-//     {
-//         int result = atoi(c[1]);
-//         int result2 = ft_atoi(c[1]);
-//         printf("Result: %d, %d\n", result, result2);
-//     }
-
-//     return 0;
-// }
