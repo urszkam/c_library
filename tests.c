@@ -246,6 +246,64 @@ void test_ft_strlen()
                                      : RED "FAIL" COLOR_RESET);
 }
 
+void test_ft_strlcat()
+{
+       // Test case 1: Concatenate strings within the available size
+       char dest1[15] = "Hello";
+       const char *src1 = " World";
+       size_t result1 = ft_strlcat(dest1, src1, sizeof(dest1));
+       CU_ASSERT_EQUAL(result1, 11);
+       CU_ASSERT_STRING_EQUAL(dest1, "Hello World");
+       printf("Test 1: ft_strlcat(\"Hello\", \" World\", 15) - Result: %s, %zu, Expected: %s, %d - %s\n",
+              dest1, result1, "Hello World", 11,
+              (result1 == 11 && strcmp(dest1, "Hello World") == 0) ? GREEN "PASS" COLOR_RESET
+                                                                   : RED "FAIL" COLOR_RESET);
+
+       // Test case 2: Concatenate strings where destination buffer is too small
+       char dest2[8] = "Hello";
+       const char *src2 = " World";
+       size_t result2 = ft_strlcat(dest2, src2, 8);
+       CU_ASSERT_EQUAL(result2, 11);
+       CU_ASSERT_STRING_EQUAL(dest2, "Hello W");
+       printf("Test 2: ft_strlcat(\"Hello\", \" World\", 8) - Result: %s, %zu, Expected: %s, %d - %s\n",
+              dest2, result2, "Hello W", 11,
+              (result2 == 11 && strcmp(dest2, "Hello W") == 0) ? GREEN "PASS" COLOR_RESET
+                                                               : RED "FAIL" COLOR_RESET);
+
+       // Test case 3: Concatenate empty source string
+       char dest3[10] = "Hello";
+       const char *src3 = "";
+       size_t result3 = ft_strlcat(dest3, src3, 10);
+       CU_ASSERT_EQUAL(result3, 5);
+       CU_ASSERT_STRING_EQUAL(dest3, "Hello");
+       printf("Test 3: ft_strlcat(\"Hello\", \"\", 10) - Result: %s, %zu, Expected: %s, %d - %s\n",
+              dest3, result3, "Hello", 5,
+              (result3 == 5 && strcmp(dest3, "Hello") == 0) ? GREEN "PASS" COLOR_RESET
+                                                            : RED "FAIL" COLOR_RESET);
+
+       // Test case 4: Concatenate to an empty destination string
+       char dest4[15] = "";
+       const char *src4 = "Hello World";
+       size_t result4 = ft_strlcat(dest4, src4, sizeof(dest4));
+       CU_ASSERT_EQUAL(result4, 11);
+       CU_ASSERT_STRING_EQUAL(dest4, "Hello World");
+       printf("Test 4: ft_strlcat(\"\", \"Hello World\", 15) - Result: %s, %zu, Expected: %s, %d - %s\n",
+              dest4, result4, "Hello World", 11,
+              (result4 == 11 && strcmp(dest4, "Hello World") == 0) ? GREEN "PASS" COLOR_RESET
+                                                                   : RED "FAIL" COLOR_RESET);
+
+       // Test case 5: Size lower than dest length
+       char dest5[15] = "Hello";
+       const char *src5 = " World";
+       size_t result5 = ft_strlcat(dest5, src5, 3);
+       CU_ASSERT_EQUAL(result5, 9);
+       CU_ASSERT_STRING_EQUAL(dest5, "Hello");
+       printf("Test 5: ft_strlcat(\"Hello\", \" World\", 3) - Result: %s, %zu, Expected: %s, %d - %s\n",
+              dest5, result5, "Hello", 9,
+              (result5 == 9 && strcmp(dest5, "Hello") == 0) ? GREEN "PASS" COLOR_RESET
+                                                            : RED "FAIL" COLOR_RESET);
+}
+
 void test_ft_toupper()
 {
        // Test case 1: lower case char
@@ -552,14 +610,6 @@ void test_ft_strtrim()
               result4 == NULL ? GREEN "PASS" COLOR_RESET
                               : RED "FAIL" COLOR_RESET);
 
-       // // Test case 5: character not found in the string
-       // char *result5 = ft_strtrim("Hello", NULL);
-       // char *expected5 = "Hello";
-       // CU_ASSERT_STRING_EQUAL(result3, expected3);
-       // printf("Test 5: ft_strtrim(\"Hello\", NULL) - Result: %s, Expected: %s - %s\n",
-       //        result5, expected5,
-       //        strcmp(result5, expected5) == 0 ? GREEN "PASS" COLOR_RESET
-       //                                        : RED "FAIL" COLOR_RESET);
        free(result1);
        free(result2);
        free(result3);
@@ -588,6 +638,7 @@ int main()
        CU_add_test(suite, BLUE "test_ft_isascii\n" COLOR_RESET, test_ft_isascii);
        CU_add_test(suite, BLUE "test_ft_isdigit\n" COLOR_RESET, test_ft_isdigit);
        CU_add_test(suite, BLUE "test_ft_isprint\n" COLOR_RESET, test_ft_isprint);
+       CU_add_test(suite, BLUE "test_ft_strlcat\n" COLOR_RESET, test_ft_strlcat);
        CU_add_test(suite, BLUE "test_ft_toupper\n" COLOR_RESET, test_ft_toupper);
        CU_add_test(suite, BLUE "test_ft_tolower\n" COLOR_RESET, test_ft_tolower);
        CU_add_test(suite, BLUE "test_ft_strlen\n" COLOR_RESET, test_ft_strlen);
