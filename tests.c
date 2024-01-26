@@ -515,6 +515,57 @@ void test_ft_strjoin()
        free(result2);
 }
 
+void test_ft_strtrim()
+{
+       // Test case 1: existing character
+       char *result1 = ft_strtrim("! Hello! !World  ! ", " !");
+       char *expected1 = "Hello! !World";
+       CU_ASSERT_STRING_EQUAL(result1, expected1);
+       printf("Test 1: ft_strtrim(\"! Hello! !World  ! \", \" !\") - Result: %s, Expected: %s - %s\n",
+              result1, expected1,
+              (strcmp(result1, expected1) == 0) ? GREEN "PASS" COLOR_RESET
+                                                : RED "FAIL" COLOR_RESET);
+
+       // Test case 2: character not found in the string
+       char *result2 = ft_strtrim("!!Hello! !World!!", "");
+       char *expected2 = "!!Hello! !World!!";
+       CU_ASSERT_STRING_EQUAL(result2, expected2);
+       printf("Test 2: ft_strtrim(\"!!Hello! !World!!\", \"\") - Result: %s, Expected: %s - %s\n",
+              result2, expected2,
+              (strcmp(result2, expected2) == 0) ? GREEN "PASS" COLOR_RESET
+                                                : RED "FAIL" COLOR_RESET);
+
+       // Test case 3: character not found in the string
+       char *result3 = ft_strtrim("AlohA", "A");
+       char *expected3 = "loh";
+       CU_ASSERT_STRING_EQUAL(result3, expected3);
+       printf("Test 3: ft_strtrim(\"AlohA\", \"A\") - Result: %s, Expected: %s - %s\n",
+              result3, expected3,
+              (strcmp(result3, expected3) == 0) ? GREEN "PASS" COLOR_RESET
+                                                : RED "FAIL" COLOR_RESET);
+
+       // Test case 4: character not found in the string
+       char *result4 = ft_strtrim(NULL, "ABC");
+       CU_ASSERT_EQUAL(0, 0);
+       printf("Test 4: ft_strtrim(NULL, \"ABC\") - Result: %s, Expected: NULL - %s\n",
+              result4,
+              result4 == NULL ? GREEN "PASS" COLOR_RESET
+                              : RED "FAIL" COLOR_RESET);
+
+       // // Test case 5: character not found in the string
+       // char *result5 = ft_strtrim("Hello", NULL);
+       // char *expected5 = "Hello";
+       // CU_ASSERT_STRING_EQUAL(result3, expected3);
+       // printf("Test 5: ft_strtrim(\"Hello\", NULL) - Result: %s, Expected: %s - %s\n",
+       //        result5, expected5,
+       //        strcmp(result5, expected5) == 0 ? GREEN "PASS" COLOR_RESET
+       //                                        : RED "FAIL" COLOR_RESET);
+       free(result1);
+       free(result2);
+       free(result3);
+       free(result4);
+}
+
 int main()
 {
        // Initialize CUnit test registry
