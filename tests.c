@@ -709,6 +709,59 @@ void test_ft_atoi()
                                      : RED "FAIL" COLOR_RESET);
 }
 
+void test_ft_substr()
+{
+       // Test case 1: Basic substring
+       char *result1 = ft_substr("Hello, World!", 7, 5);
+       char *expected1 = "World";
+       CU_ASSERT_STRING_EQUAL(result1, expected1);
+       printf("Test 1: ft_substr(\"Hello, World!\", 7, 5) - Result: %s, Expected: %s - %s\n",
+              result1, expected1,
+              strcmp(result1, expected1) == 0 ? GREEN "PASS" COLOR_RESET
+                                              : RED "FAIL" COLOR_RESET);
+
+       // Test case 2: Substring exceeding string length
+       char *result2 = ft_substr("Testing", 0, 20);
+       char *expected2 = "Testing";
+       CU_ASSERT_STRING_EQUAL(result2, expected2);
+       printf("Test 2: ft_substr(\"Testing\", 0, 20) - Result: %s, Expected: %s - %s\n",
+              result2, expected2,
+              strcmp(result2, expected2) == 0 ? GREEN "PASS" COLOR_RESET
+                                              : RED "FAIL" COLOR_RESET);
+
+       // Test case 3: Substring from an empty string
+       char *result3 = ft_substr("", 0, 3);
+       char *expected3 = "";
+       CU_ASSERT_STRING_EQUAL(result3, expected3);
+       printf("Test 3: ft_substr(\"\", 0, 3) - Result: %s, Expected: %s - %s\n",
+              result3, expected3,
+              strcmp(result3, expected3) == 0 ? GREEN "PASS" COLOR_RESET
+                                              : RED "FAIL" COLOR_RESET);
+
+       // Test case 4: Empty substring
+       char *result4 = ft_substr("Substring", 5, 0);
+       char *expected4 = "";
+       CU_ASSERT_STRING_EQUAL(result4, expected4);
+       printf("Test 4: ft_substr(\"Substring\", 5, 0) - Result: %s, Expected: %s - %s\n",
+              result4, expected4,
+              strcmp(result4, expected4) == 0 ? GREEN "PASS" COLOR_RESET
+                                              : RED "FAIL" COLOR_RESET);
+
+       // Test case 5: Start exceeding string length
+       char *result5 = ft_substr("Substring", 20, 5);
+       char *expected5 = "";
+       CU_ASSERT_STRING_EQUAL(result5, expected5);
+       printf("Test 5: ft_substr(\"Substring\", 20, 5) - Result: %s, Expected: %s - %s\n",
+              result5, expected5,
+              strcmp(result5, expected5) == 0 ? GREEN "PASS" COLOR_RESET
+                                              : RED "FAIL" COLOR_RESET);
+       free(result1);
+       free(result2);
+       free(result3);
+       free(result4);
+       free(result5);
+}
+
 int main()
 {
        // Initialize CUnit test registry
