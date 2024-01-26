@@ -1,6 +1,7 @@
 #include "libft.h"
 #include <stdio.h>
 #include <ctype.h>
+#include <string.h>
 #include "CUnit/Basic.h"
 
 #define RED "\x1b[31m"
@@ -17,6 +18,21 @@ int init_suite()
 int clean_suite()
 {
        return 0;
+}
+
+static char caesarEncrypt(unsigned int i, char c)
+{
+       if (c >= 'A' && c <= 'Z')
+              c = (c - 'A' + i) % 26 + 'A';
+       else if (c >= 'a' && c <= 'z')
+              c = (c - 'a' + i) % 26 + 'a';
+       return (c);
+}
+
+void a_to_X(unsigned int i, char *c)
+{
+       if (*c == 'a' && i % 2 == 0)
+              *c = 'X';
 }
 
 /* Function Tests */
@@ -244,6 +260,42 @@ void test_ft_strlen()
               result2, expected2,
               (result2 == expected2) ? GREEN "PASS" COLOR_RESET
                                      : RED "FAIL" COLOR_RESET);
+}
+
+void test_ft_strlcpy()
+{
+       // Test case 1: Copying a string within the buffer size
+       char dest1[10] = "Hello";
+       const char *src1 = "World";
+       size_t result1 = ft_strlcpy(dest1, src1, sizeof(dest1));
+       CU_ASSERT_STRING_EQUAL(dest1, "World");
+       CU_ASSERT_EQUAL(result1, 5);
+       printf("Test 1: ft_strlcpy(\"Hello\", \"World\", 10) - Result: %s, %zu, Expected: World, 5 - %s\n",
+              dest1, result1,
+              result1 == 5 ? GREEN "PASS" COLOR_RESET
+                           : RED "FAIL" COLOR_RESET);
+
+       // Test case 2: Copying an empty string
+       char dest2[10] = "Hello";
+       const char *src2 = "";
+       size_t result2 = ft_strlcpy(dest2, src2, sizeof(dest2));
+       CU_ASSERT_STRING_EQUAL(dest2, "");
+       CU_ASSERT_EQUAL(result2, 0);
+       printf("Test 2: ft_strlcpy(\"Hello\", \"\", 10) - Result: %s, %zu, Expected: \"\", 0 - %s\n",
+              dest2, result2,
+              result2 == 0 ? GREEN "PASS" COLOR_RESET
+                           : RED "FAIL" COLOR_RESET);
+
+       // Test case 3: Buffer size is less than the source string
+       char dest3[5] = "Hello";
+       const char *src3 = "World";
+       size_t result3 = ft_strlcpy(dest3, src3, 4);
+       CU_ASSERT_STRING_EQUAL(dest3, "Wor");
+       CU_ASSERT_EQUAL(result3, 5);
+       printf("Test 3: ft_strlcpy(\"Hello\", \"World\", 5) - Result: %s, %zu, Expected: Wor, 5 - %s\n",
+              dest3, result3,
+              result3 == 5 ? GREEN "PASS" COLOR_RESET
+                           : RED "FAIL" COLOR_RESET);
 }
 
 void test_ft_strlcat()
@@ -503,52 +555,50 @@ void test_ft_strncmp()
                                      : RED "FAIL" COLOR_RESET);
 }
 
-// void test_ft_strnstr()
-// {
-//        // Test case 1: existing character
-//        char *result1 = ft_strnstr("Hello World!", "Hell", 7);
-//        char *expected1 = strnstr("Hello World!", "Hell", 7);
-//        CU_ASSERT_PTR_EQUAL(result1, expected1);
-//        printf("Test 1: ft_strnstr(\"Hello World!\", \"Hell\", 7) - Result: %p, Expected: %p - %s\n",
-//               (void *)result1, (void *)expected1,
-//               (result1 == expected1) ? GREEN "PASS" COLOR_RESET
-//                                      : RED "FAIL" COLOR_RESET);
+void test_ft_strnstr()
+{
+       // Test case 1: substr exists within the buffer
+       char *result1 = ft_strnstr("Hello World!", "Hell", 7);
+       char *expected1 = "Hello World!";
+       CU_ASSERT_PTR_EQUAL(result1, expected1);
+       printf("Test 1: ft_strnstr(\"Hello World!\", \"Hell\", 7) - Result: %s, Expected: %s - %s\n",
+              result1, expected1,
+              (result1 == expected1) ? GREEN "PASS" COLOR_RESET
+                                     : RED "FAIL" COLOR_RESET);
 
-//        // Test case 2: character not found in the string
-//        char *result2 = ft_strnstr("Hello World!", "Woo", 20);
-//        CU_ASSERT_PTR_NULL(result2);
-//        printf("Test 2: ft_strnstr(\"Hello World!\", \"Woo\", 20) - Result: %p, Expected: NULL - %s\n",
-//               (void *)result2,
-//               (result2 == NULL) ? GREEN "PASS" COLOR_RESET
-//                                 : RED "FAIL" COLOR_RESET);
+       // Test case 2: substr not found in the string
+       char *result2 = ft_strnstr("Hello World!", "Woo", 20);
+       CU_ASSERT_PTR_NULL(result2);
+       printf("Test 2: ft_strnstr(\"Hello World!\", \"Woo\", 20) - Result: %s, Expected: NULL - %s\n",
+              result2,
+              (result2 == NULL) ? GREEN "PASS" COLOR_RESET
+                                : RED "FAIL" COLOR_RESET);
 
-//        // Test case 3: char is the only char in the string
-//        char *result3 = ft_strnstr("Hello World!", "World", 7);
-//        char *expected3 = strnstr("Hello World!", "World", 7);
-//        CU_ASSERT_PTR_EQUAL(result3, expected3);
-//        printf("Test 3: ft_strnstr(\"Hello World!\", \"World\", 7) - Result: %p, Expected: %p - %s\n",
-//               (void *)result3, (void *)expected3,
-//               (result3 == expected3) ? GREEN "PASS" COLOR_RESET
-//                                      : RED "FAIL" COLOR_RESET);
+       // Test case 3: substr not found in the string within the buffer size
+       char *result3 = ft_strnstr("Hello World!", "World", 9);
+       CU_ASSERT_PTR_NULL(result3);
+       printf("Test 3: ft_strnstr(\"Hello World!\", \"World\", 9) - Result: %s, Expected: NULL - %s\n",
+              result3,
+              (result3 == NULL) ? GREEN "PASS" COLOR_RESET
+                                : RED "FAIL" COLOR_RESET);
 
-//        // Test case 4: char is \0
-//        char *result4 = ft_strnstr("Hello World!", "World", 3);
-//        char *expected4 = strnstr("Hello World!", "World", 3);
-//        CU_ASSERT_PTR_EQUAL(result4, expected4);
-//        printf("Test 4: ft_strnstr(\"Hello World!\", \"World\", 3) - Result: %p, Expected: %p - %s\n",
-//               (void *)result4, (void *)expected4,
-//               (result4 == expected4) ? GREEN "PASS" COLOR_RESET
-//                                      : RED "FAIL" COLOR_RESET);
+       // Test case 4: char is \0
+       char *result4 = ft_strnstr("Hello World!", "", 10);
+       char *expected4 = "Hello World!";
+       CU_ASSERT_PTR_EQUAL(result4, expected4);
+       printf("Test 4: ft_strnstr(\"Hello World!\", \"\", 10) - Result: %s, Expected: %s - %s\n",
+              result4, expected4,
+              (result4 == expected4) ? GREEN "PASS" COLOR_RESET
+                                     : RED "FAIL" COLOR_RESET);
 
-//        // Test case 5: char is \0
-//        char *result5 = ft_strnstr("", "World", 8);
-//        char *expected5 = strnstr("", "World", 8);
-//        CU_ASSERT_PTR_EQUAL(result5, expected5);
-//        printf("Test 5: ft_strnstr(\"\", \"World\", 8) - Result: %p, Expected: %p - %s\n",
-//               (void *)result5, (void *)expected5,
-//               (result5 == expected5) ? GREEN "PASS" COLOR_RESET
-//                                      : RED "FAIL" COLOR_RESET);
-// }
+       // Test case 5: char is \0
+       char *result5 = ft_strnstr("", "World", 8);
+       CU_ASSERT_PTR_NULL(result5);
+       printf("Test 5: ft_strnstr(\"\", \"World\", 8) - Result: %s, Expected: NULL - %s\n",
+              result5,
+              (result5 == NULL) ? GREEN "PASS" COLOR_RESET
+                                : RED "FAIL" COLOR_RESET);
+}
 
 void test_ft_strjoin()
 {
@@ -638,6 +688,7 @@ int main()
        CU_add_test(suite, BLUE "test_ft_isascii\n" COLOR_RESET, test_ft_isascii);
        CU_add_test(suite, BLUE "test_ft_isdigit\n" COLOR_RESET, test_ft_isdigit);
        CU_add_test(suite, BLUE "test_ft_isprint\n" COLOR_RESET, test_ft_isprint);
+       CU_add_test(suite, BLUE "test_ft_strlcpy\n" COLOR_RESET, test_ft_strlcpy);
        CU_add_test(suite, BLUE "test_ft_strlcat\n" COLOR_RESET, test_ft_strlcat);
        CU_add_test(suite, BLUE "test_ft_toupper\n" COLOR_RESET, test_ft_toupper);
        CU_add_test(suite, BLUE "test_ft_tolower\n" COLOR_RESET, test_ft_tolower);
@@ -645,9 +696,13 @@ int main()
        CU_add_test(suite, BLUE "test_ft_strchr\n" COLOR_RESET, test_ft_strchr);
        CU_add_test(suite, BLUE "test_ft_strrchr\n" COLOR_RESET, test_ft_strrchr);
        CU_add_test(suite, BLUE "test_ft_strncmp\n" COLOR_RESET, test_ft_strncmp);
-       // CU_add_test(suite, BLUE "test_ft_strnstr\n" COLOR_RESET, test_ft_strnstr);
+       CU_add_test(suite, BLUE "test_ft_strnstr\n" COLOR_RESET, test_ft_strnstr);
+       CU_add_test(suite, BLUE "test_ft_atoi\n" COLOR_RESET, test_ft_atoi);
+       CU_add_test(suite, BLUE "test_ft_substr\n" COLOR_RESET, test_ft_substr);
        CU_add_test(suite, BLUE "test_ft_strjoin\n" COLOR_RESET, test_ft_strjoin);
        CU_add_test(suite, BLUE "test_ft_strtrim\n" COLOR_RESET, test_ft_strtrim);
+       CU_add_test(suite, BLUE "test_ft_strmapi\n" COLOR_RESET, test_ft_strmapi);
+       CU_add_test(suite, BLUE "test_ft_striteri\n" COLOR_RESET, test_ft_striteri);
 
        // Run the tests
        CU_basic_set_mode(CU_BRM_VERBOSE);
