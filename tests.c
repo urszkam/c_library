@@ -762,6 +762,31 @@ void test_ft_substr()
        free(result5);
 }
 
+void test_ft_strmapi()
+{
+       // Test case 1: Basic Test
+       char input1[] = "Hdjik!";
+       char expected1[] = "Hello!";
+       char *result1 = ft_strmapi(input1, &caesarEncrypt);
+       CU_ASSERT_STRING_EQUAL(result1, expected1);
+       printf("Test 1: ft_strmapi(\"Hdjik!\", &caesarEncrypt) - Result: %s, Expected: %s - %s\n",
+              result1, expected1,
+              strcmp(result1, expected1) == 0 ? GREEN "PASS" COLOR_RESET
+                                              : RED "FAIL" COLOR_RESET);
+
+       // Test case 2: Empty String
+       char input2[] = "";
+       char *result2 = ft_strmapi(input2, &caesarEncrypt);
+       CU_ASSERT_STRING_EQUAL(result2, "");
+       printf("Test 2: ft_strmapi(\"\", &caesarEncrypt) - Result: %s, Expected: \"\" - %s\n",
+              result2,
+              strcmp(result2, "") == 0 ? GREEN "PASS" COLOR_RESET
+                                       : RED "FAIL" COLOR_RESET);
+
+       free(result1);
+       free(result2);
+}
+
 int main()
 {
        // Initialize CUnit test registry
