@@ -39,4 +39,9 @@ tests:
 	@./tests.out
 	@rm -f tests.out
 
+bonus-tests:
+	@$(CC) -o bonus_tests.out bonus_tests.c -L. -lft -I./ -lcunit
+	@./bonus_tests.out
+	@rm -f bonus_tests.out
+
 .PHONY: clean fclean re all
