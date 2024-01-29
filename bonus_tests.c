@@ -87,15 +87,46 @@ void test_ft_lstadd_front()
     // ft_lstclear(&list2, &free);
 }
 
+void test_ft_lstadd_back()
+{
+    // Test case 1: Add a new node to an empty list
+    t_list *list1 = NULL;
+    int content1 = 42;
+    t_list *new_node1 = ft_lstnew(&content1);
+    ft_lstadd_back(&list1, new_node1);
+    CU_ASSERT_PTR_EQUAL(list1, new_node1);
+    CU_ASSERT_PTR_EQUAL(list1->content, &content1);
+    CU_ASSERT_PTR_NULL(list1->next);
+    printf("Test 1: ft_lstadd_back(NULL, 42) - List: %p, Content: %d, Next: %p - %s\n",
+           (void *)(list1), *(int *)(list1->content), (void *)(list1->next),
+           (list1 == new_node1 && list1->content == &content1 && list1->next == NULL) ? GREEN "PASS" COLOR_RESET
+                                                                                      : RED "FAIL" COLOR_RESET);
+
+    // Test case 2: Add a new node to a non-empty list
+    t_list *list2 = ft_lstnew("Hello");
+    t_list *node = list2;
+    int content2 = 123;
+    t_list *new_node2 = ft_lstnew(&content2);
+    ft_lstadd_back(&list2, new_node2);
+    CU_ASSERT_PTR_EQUAL(list2, node);
+    CU_ASSERT_PTR_EQUAL(list2->next->content, &content2);
+    CU_ASSERT_PTR_EQUAL(list2->next, new_node2);
+    CU_ASSERT_PTR_NULL(list2->next->next);
+    printf("Test 2: ft_lstadd_back(\"Hello\", 123) - List: %p, Content: %s, Next: %p - %s\n",
+           (void *)(list2), (char *)(list2->content), (void *)(list2->next),
+           (list2 == node && list2->next->content == &content2 && list2->next == new_node2) ? GREEN "PASS" COLOR_RESET
+                                                                                            : RED "FAIL" COLOR_RESET);
+    // ft_lstclear(&list1, &free);
+    // ft_lstclear(&list2, &free);
+}
+
 int main()
 {
-    // Initialize CUnit test registry
     if (CUE_SUCCESS != CU_initialize_registry())
     {
         return CU_get_error();
     }
 
-    // Add your test suite
     CU_pSuite suite = CU_add_suite("Bonus Functions", init_suite, clean_suite);
     if (NULL == suite)
     {
@@ -103,14 +134,12 @@ int main()
         return CU_get_error();
     }
 
-    // Add your test functions to the suite
     CU_add_test(suite, BLUE "test_ft_lstnew\n" COLOR_RESET, test_ft_lstnew);
     CU_add_test(suite, BLUE "test_ft_lstadd_front\n" COLOR_RESET, test_ft_lstadd_front);
     CU_add_test(suite, BLUE "test_ft_lstadd_back\n" COLOR_RESET, test_ft_lstadd_back);
     CU_add_test(suite, BLUE "test_ft_lstsize\n" COLOR_RESET, test_ft_lstsize);
     CU_add_test(suite, BLUE "test_ft_lstdelone\n" COLOR_RESET, test_ft_lstdelone);
 
-    // Run the tests
     CU_basic_set_mode(CU_BRM_VERBOSE);
     CU_basic_run_tests();
     CU_cleanup_registry();
