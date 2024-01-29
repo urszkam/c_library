@@ -149,6 +149,36 @@ void test_ft_lstsize()
            (result3 == 3) ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
 }
 
+void test_ft_lstdelone()
+{
+    // Test case 1: Delete a node with integer content
+    int *content1 = malloc(sizeof(int));
+    *content1 = 42;
+    t_list *node1 = ft_lstnew(content1);
+    ft_lstdelone(node1, &free);
+    CU_ASSERT_PTR_NULL(node1);
+    printf("Test 1: ft_lstdelone(node with int content) - Result: %p, Content: %d - %s\n",
+           (void *)node1, sizeof(content1),
+           (node1 == NULL) ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
+
+    // Test case 2: Delete a node with string content
+    char *content2 = strdup("Hello, World!");
+    t_list *node2 = ft_lstnew(content2);
+    ft_lstdelone(node2, &free);
+    CU_ASSERT_PTR_NULL(node2);
+    printf("Test 2: ft_lstdelone(node with string content) - Result: %p, Content: %p - %s\n",
+           (void *)node2, (void *)content2,
+           (node2 == NULL) ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
+
+    // Test case 3: Try to delete a NULL node
+    t_list *node3 = NULL;
+    ft_lstdelone(node3, &free);
+    CU_ASSERT_PTR_NULL(node3);
+    printf("Test 3: ft_lstdelone(NULL node) - Result: %p - %s\n",
+           (void *)node3,
+           (node3 == NULL) ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
+}
+
 int main()
 {
     if (CUE_SUCCESS != CU_initialize_registry())
