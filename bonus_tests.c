@@ -19,16 +19,39 @@ int clean_suite()
 }
 
 /* Function Tests */
-void test_()
+void test_ft_lstnew()
 {
-    // Test case 1:
-    char *result1 = ;
-    char *expected1 = ;
-    CU_ASSERT_PTR_EQUAL(result1, expected1);
-    printf("Test 1:  - Result: %p, Expected: %p - %s\n",
-           (void *)result1, (void *)expected1,
-           (result1 == expected1) ? GREEN "PASS" COLOR_RESET
-                                  : RED "FAIL" COLOR_RESET);
+    // Test case 1: Node with int content
+    int content1 = 42;
+    t_list *node1 = ft_lstnew(&content1);
+    CU_ASSERT_PTR_NOT_NULL(node1);
+    CU_ASSERT_PTR_EQUAL(node1->content, &content1);
+    CU_ASSERT_PTR_NULL(node1->next);
+    printf("Test 1: ft_lstnew(42) - content: %d, next: %p - %s\n",
+           *(int *)(node1->content), node1->next,
+           (node1->content == &content1 && node1->next == NULL) ? GREEN "PASS" COLOR_RESET
+                                                                : RED "FAIL" COLOR_RESET);
+
+    // Test case 2: Node with string content
+    char *content2 = "Hello, World!";
+    t_list *node2 = ft_lstnew(content2);
+    CU_ASSERT_PTR_NOT_NULL(node2);
+    CU_ASSERT_STRING_EQUAL((char *)node2->content, content2);
+    CU_ASSERT_PTR_NULL(node2->next);
+    printf("Test 2: ft_lstnew(\"Hello World\") - content: %s, next: %p - %s\n",
+           (char *)(node2->content), node2->next,
+           (strcmp((char *)node2->content, content2) == 0 && node2->next == NULL) ? GREEN "PASS" COLOR_RESET
+                                                                                  : RED "FAIL" COLOR_RESET);
+
+    // Test case 3: Node with NULL content
+    t_list *node3 = ft_lstnew(NULL);
+    CU_ASSERT_PTR_NOT_NULL(node3);
+    CU_ASSERT_PTR_NULL(node3->content);
+    CU_ASSERT_PTR_NULL(node3->next);
+    printf("Test 3: ft_lstnew(NULL) - content: %p, next: %p - %s\n",
+           node3->content, node3->next,
+           (node3->content == NULL && node3->next == NULL) ? GREEN "PASS" COLOR_RESET
+                                                           : RED "FAIL" COLOR_RESET);
 }
 
 int main()
@@ -48,7 +71,11 @@ int main()
     }
 
     // Add your test functions to the suite
-    CU_add_test(suite, BLUE "test_ft_isalnum\n" COLOR_RESET, test_ft_isalnum);
+    CU_add_test(suite, BLUE "test_ft_lstnew\n" COLOR_RESET, test_ft_lstnew);
+    CU_add_test(suite, BLUE "test_ft_lstadd_front\n" COLOR_RESET, test_ft_lstadd_front);
+    CU_add_test(suite, BLUE "test_ft_lstadd_back\n" COLOR_RESET, test_ft_lstadd_back);
+    CU_add_test(suite, BLUE "test_ft_lstsize\n" COLOR_RESET, test_ft_lstsize);
+    CU_add_test(suite, BLUE "test_ft_lstdelone\n" COLOR_RESET, test_ft_lstdelone);
 
     // Run the tests
     CU_basic_set_mode(CU_BRM_VERBOSE);
