@@ -120,6 +120,35 @@ void test_ft_lstadd_back()
     // ft_lstclear(&list2, &free);
 }
 
+void test_ft_lstsize()
+{
+    // Test case 1: Count nodes in an empty list
+    t_list *list1 = NULL;
+    int result1 = ft_lstsize(list1);
+    CU_ASSERT_EQUAL(result1, 0);
+    printf("Test 1: ft_lstsize(empty list) - Result: %d, Expected: 0 - %s\n",
+           result1,
+           (result1 == 0) ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
+
+    // Test case 2: Count nodes in a list with one node
+    t_list *list2 = ft_lstnew("Hello");
+    int result2 = ft_lstsize(list2);
+    CU_ASSERT_EQUAL(result2, 1);
+    printf("Test 2: ft_lstsize(list with one node) - Result: %d, Expected: 1 - %s\n",
+           result2,
+           (result2 == 1) ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
+
+    // Test case 3: Count nodes in a list with multiple nodes
+    t_list *list3 = ft_lstnew("Node1");
+    ft_lstadd_front(&list3, ft_lstnew("Node2"));
+    ft_lstadd_front(&list3, ft_lstnew("Node3"));
+    int result3 = ft_lstsize(list3);
+    CU_ASSERT_EQUAL(result3, 3);
+    printf("Test 3: ft_lstsize(list with multiple nodes) - Result: %d, Expected: 3 - %s\n",
+           result3,
+           (result3 == 3) ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
+}
+
 int main()
 {
     if (CUE_SUCCESS != CU_initialize_registry())
