@@ -8,13 +8,15 @@
 
 #include "libft.h"
 
-void *ft_calloc(size_t nmemb, size_t size)
+void	*ft_calloc(size_t nmemb, size_t size)
 {
-    if (!nmemb || !size)
-        return (0);
-    void *dest = (void *)malloc(nmemb * size);
-    if (!dest)
-        return (0);
-    ft_bzero(dest, nmemb * size);
-    return (dest);
+	void	*dest;
+
+	if (!nmemb || !size)
+		return (0);
+	dest = (void *)malloc(nmemb * size);
+	if (!dest)
+		return (0);
+	ft_bzero(dest, nmemb * size);
+	return (dest);
 }
