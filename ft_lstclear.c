@@ -2,12 +2,12 @@
 
 void ft_lstclear(t_list **lst, void (*del) (void *))
 {
-    t_list *curr;
+    if (!(*lst))
+        return;
 
-    while(*lst)
-    {
-        curr = *lst;
-        *lst = (*lst)->next;
-        ft_lstdelone(curr, del);
-    }
+    if ((*lst)->next)
+        ft_lstclear(&(*lst)->next, del);
+
+    ft_lstdelone(*lst, del);
+    *lst = NULL;
 }
