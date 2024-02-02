@@ -15,27 +15,27 @@ This project focuses on creating a custom C library, providing essential functio
 # Functions
 ## Libc Functions
 Replics of functions from the libc with names prefixed by 'ft_'
-1. **ft_isalpha:** Checks if character is alphabetic.
-2. **ft_isdigit:** Checks if character is a digit.
-3. **ft_isalnum:** Checks if character is alphanumeric.
-4. **ft_isascii:** Checks if character is ASCII.
-5. **ft_isprint:** Checks if character is printable.
+1. **ft_isalpha:** Checks if a character is alphabetic.
+2. **ft_isdigit:** Checks if a character is a digit.
+3. **ft_isalnum:** Checks if a character is alphanumeric.
+4. **ft_isascii:** Checks if a character is ASCII.
+5. **ft_isprint:** Checks if a character is printable.
 6. **ft_strlen:** Calculates string length.
 7. **ft_memset:** Fills memory with a constant byte.
 8. **ft_bzero:** Sets the first n bytes of memory to zero.
-9. **ft_memcpy:** Copys memory area.
-10. **ft_memmove:** Copys memory area with overlapping.
-11. **ft_strlcpy:** Copys string up to size characters.
+9. **ft_memcpy:** Copies memory area.
+10. **ft_memmove:** Copies memory area with overlapping.
+11. **ft_strlcpy:** Copies string up to size characters.
 12. **ft_strlcat:** Concatenates strings with size control.
 13. **ft_toupper:** Converts character to uppercase.
 14. **ft_tolower:** Converts character to lowercase.
 15. **ft_strchr:** Locates character in string.
 16. **ft_strrchr:** Locates character in string (reverse).
-17. **ft_strncmp:** Compares first n characters of two strings.
+17. **ft_strncmp:** Compares the first n characters of two strings.
 18. **ft_memchr:** Locates byte in byte string.
 19. **ft_memcmp:** Compares memory areas.
-20. **ft_strnstr:** Locates substring in string with size control.
-21. **ft_atoi:** Converts string to integer.
+20. **ft_strnstr:** Locates substring in a string with size control.
+21. **ft_atoi:** Converts a string to an integer.
 
 ## Additional functions
 Extra utilities like substring creation, string concatenation, and integer-to-string conversion.
@@ -58,9 +58,9 @@ Linked list manipulation functions
 3. **ft_lstsize:** Gets the number of nodes in a list.
 4. **ft_lstlast:** Gets the last node of a list.
 5. **ft_lstadd_back:** Adds a node to the end of the list.
-6. **ft_lstdelone:** Deletes a single node, free content using provided function.
-7. **ft_lstclear:** Deletes the entire list, free content using the provided function.
-8. **ft_lstiter:** Iterates through the list and apply a function to each node's content.
+6. **ft_lstdelone:** Deletes a single node, and frees content using the provided function.
+7. **ft_lstclear:** Deletes the entire list, and frees content using the provided function.
+8. **ft_lstiter:** Iterates through the list and applies a function to each node's content.
 9. **ft_lstmap:** Creates a new list resulting from applying a function to each node's content.
 
 # Getting started
