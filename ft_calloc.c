@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ukaminsk <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/26 16:27:56 by ukaminsk          #+#    #+#             */
+/*   Updated: 2024/02/26 16:28:04 by ukaminsk         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 /*
 ** The calloc() function allocates memory for an array of nmemb elements
 ** of size bytes each and returns a pointer to the allocated memory.

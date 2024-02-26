@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_striteri.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ukaminsk <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/26 17:18:13 by ukaminsk          #+#    #+#             */
+/*   Updated: 2024/02/26 17:18:55 by ukaminsk         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 /*
 ** Applies the function ’f’ on each character of
 ** the string passed as argument, passing its index
@@ -7,7 +19,7 @@
 
 void	ft_striteri(char *s, void (*f) (unsigned int, char*))
 {
-	unsigned int i;
+	unsigned int	i;
 
 	i = 0;
 	while (s[i])
