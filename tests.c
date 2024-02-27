@@ -724,7 +724,7 @@ void test_ft_strnstr()
 {
        // Test case 1: substr exists within the buffer
        char *result1 = ft_strnstr("Hello World!", "Hell", 7);
-       char *expected1 = strnstr("Hello World!", "Hell", 7);
+       char *expected1 = "Hello World!";
        int result = strcmp(result1, expected1);
        printf("Test 1: ft_strnstr(\"Hello World!\", \"Hell\", 7) - Result: %s, Expected: %s - %s\n",
               result1, expected1,
