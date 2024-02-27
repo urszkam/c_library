@@ -14,14 +14,6 @@
 
 void	ft_lstadd_back(t_list **lst, t_list *new)
 {
-<<<<<<< Updated upstream
-	t_list	*curr;
-
-	curr = *lst;
-	while (curr->next != NULL)
-		curr = curr->next;
-	curr->next = new;
-=======
 	t_list	*last;
 
 	if (!new)
@@ -33,5 +25,4 @@ void	ft_lstadd_back(t_list **lst, t_list *new)
 	}
 	last = ft_lstlast(*lst);
 	last->next = new;
->>>>>>> Stashed changes
 }
