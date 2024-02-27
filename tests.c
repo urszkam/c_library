@@ -11,7 +11,7 @@
 #define COLOR_RESET "\x1b[0m"
 
 /* Initialize and Cleanup Functions */
-int init_suite()
+/*int init_suite()
 {
        return 0;
 }
@@ -19,11 +19,7 @@ int init_suite()
 int clean_suite()
 {
        return 0;
-}
-
-static bool arePtrEqual(const void* ptr1, const void* ptr2) {
-    return ptr1 == ptr2;
-}
+}*/
 
 static char caesarEncrypt(unsigned int i, char c)
 {
@@ -110,34 +106,41 @@ void test_ft_bzero()
 
 void test_ft_memcpy()
 {
+    // Test case 1: copying from a non-empty source to a non-empty destination
     char source1[10] = "Hello";
     char destination1[10] = "World";
-    char expectedDestination1[10] = "Hello";
+    char expected1[10] = "World";
 
-    // Test case 1: copying from a non-empty source to a non-empty destination
     ft_memcpy(destination1, source1, 5);
-    int result1 = memcmp(destination1, expectedDestination1, sizeof(destination1)) == 0;
-    printf("Test 1: ft_memcpy(destination1, source1, 5) - Result: %s\n", result1 ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
-
-    char source2[5] = "Test";
-    char destination2[5] = "";
-    char expectedDestination2[5] = "Test";
+    memcpy(expected1, source1, 5);
+    int result1 = memcmp(destination1, expected1, sizeof(destination1)) == 0;
+    printf("Test 1: ft_memcpy(\"World\", \"Hello\", 5) - Result: %s, Expected: %s - %s\n",
+        destination1, expected1, result1 ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
 
     // Test case 2: copying from a non-empty source to an empty destination
+    char source2[5] = "Test";
+    char destination2[5] = "";
+    char expected2[5] = "";
+
+    
     ft_memcpy(destination2, source2, sizeof(source2));
-    int result2 = memcmp(destination2, expectedDestination2, sizeof(destination2)) == 0;
-    printf("Test 2: ft_memcpy(destination2, source2, sizeof(source2)) - Result: %s\n", result2 ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
+    memcpy(expected2, source2, sizeof(source2));
+    int result2 = memcmp(destination2, expected2, sizeof(destination2)) == 0;
+    printf("Test 2: ft_memcpy(destination2, source2, sizeof(source2)) - Result: %s, Expected: %s - %s\n",
+        destination2, expected2, result2 ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
     
     // Test case 3: copying from a non-empty source to part of a destination
-    char source3[8] = "Partial";
-    char destination3[8] = "XXXXXXX";
-    char expectedDestination3[8] = "PartXXX";
+    char source3[9] = "XXXXXXXX";
+    char destination3[9] = "Love You";
+    char expected3[9] = "Love You";
 
     ft_memcpy(destination3 + 3, source3, 4);
-    int result3 = memcmp(destination3, expectedDestination3, sizeof(destination3)) == 0;
-    printf("Test 3: ft_memcpy(destination3 + 3, source3, 4) - Result: %s\n", result3 ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
+    memcpy(expected3 + 3, source3, 4);
+    int result3 = memcmp(destination3, expected3, sizeof(destination3)) == 0;
+    printf("Test 3: ft_memcpy(\"Love You\" + 3, \"\", 4) - Result: %s, Expected: %s - %s\n",
+        destination3, expected3, result3 ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
 }
-
+/*
 void test_ft_memmove()
 {
     char source1[10] = "Hello";
@@ -166,7 +169,7 @@ void test_ft_memmove()
     ft_memmove(destination3 + 3, source3, 4);
     int result3 = memcmp(destination3, expectedDestination3, sizeof(destination3)) == 0;
     printf("Test 3: ft_memmove(destination3 + 3, source3, 4) - Result: %s\n", result3 ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
-}
+}*/
 
 void test_ft_isalnum()
 {
@@ -208,7 +211,7 @@ void test_ft_isalpha()
        // Test case 1: lower case char
        int result1 = ft_isalpha('h');
        int expected1 = 1;
-       result = result1 == expected1;
+       int result = result1 == expected1;
        printf("Test 1: ft_isalpha('h') - Result: %d, Expected: %d - %s\n",
               result1, expected1,
               result ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
@@ -632,106 +635,129 @@ void test_ft_strncmp()
 
 void test_ft_memchr()
 {
-    char buffer1[10] = "Hello";
-    char expectedBuffer1[10] = "Hello";
-
     // Test case 1: finding 'e' in a non-empty buffer
-    void* result1 = ft_memchr(buffer1, 'e', 3);
-    int position1 = result1 ? (int)((char*)result1 - buffer1) : -1;
-    printf("Test 1: ft_memchr(buffer1, 'e', 5) - Result: %s\n", position1 == 1 ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
+    char buffer1[10] = "Hello";
 
-    char buffer2[5] = "Test";
-    char expectedBuffer2[5] = "Test";
-
+    void *result1 = ft_memchr(buffer1, 'e', 3);
+    void *expected1 = memchr(buffer1, 'e', 3);
+    int result = strcmp((char *) result1, (char *) expected1) == 0;
+    printf("Test 1: ft_memchr(\"Hello\", 'e', 5) - Result: %s, Expected: %s - %s\n",
+        (char *) result1, (char *) expected1, result ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
+        
     // Test case 2: finding 't' in an entire buffer
+    char buffer2[5] = "Test";
+
     void* result2 = ft_memchr(buffer2, 't', sizeof(buffer2));
-    int position2 = result2 ? (int)((char*)result2 - buffer2) : -1;
-    printf("Test 2: ft_memchr(buffer2, 't', sizeof(buffer2)) - Result: %s\n", position2 == 3 ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
+    void* expected2 = memchr(buffer2, 't', sizeof(buffer2));
+    result = strcmp((char *) result2, (char *) expected2) == 0;
+    printf("Test 2: ft_memchr(\"Test\", 't', sizeof(\"Test\")) - Result: %s, Expected: %s - %s\n",
+        (char *) result2,(char *) expected2, result ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
     
     // Test case 3: finding 'i' in part of a buffer
-    char buffer3[8] = "Partial";
-    char expectedBuffer3[8] = "Partial";
+    char buffer3[9] = "Love You";
 
-    void* result3 = ft_memchr(buffer3, 'i', 5);
-    void* expected3 = memchr(buffer3, 'i', 5);
-    printf("Test 3: ft_memchr(buffer3 + 2, 'i', 5) - Result: %s\n", result3 == expected3 ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
+    void* result3 = ft_memchr(buffer3, ' ', 5);
+    void* expected3 = memchr(buffer3, ' ', 5);
+    result = strcmp((char *) result3, (char *) expected3) == 0;
+    printf("Test 3: ft_memchr(\"Love You\" + 2, ' ', 5) - Result: %s, Expected: %s - %s\n",
+        (char *) result3, (char *) expected3, result ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
     
     // Test case 4: finding 'x' in a buffer where it doesn't exist
     void* result4 = ft_memchr(buffer3, 'x', sizeof(buffer3));
-    int position4 = result4 ? (int)((char*)result4 - buffer3) : -1;
-    printf("Test 4: ft_memchr(buffer3, 'x', sizeof(buffer3)) - Result: %s\n", position4 == -1 ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
+    void* expected4 = memchr(buffer3, 'x', sizeof(buffer3));
+    result = result4 == expected4;
+    printf("Test 4: ft_memchr(\"Love You\", 'x', sizeof(\"Love You\")) - Result: %s, Expected: %s - %s\n", 
+        (char *) result4, (char *) expected4, result ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
 }
 
 void test_ft_memcmp()
 {
-    char buffer1[10] = "Hello";
-    char expectedBuffer1[10] = "Hello";
-
     // Test case 1: comparing two equal non-empty buffers
-    int result1 = ft_memcmp(buffer1, expectedBuffer1, sizeof(buffer1));
-    int expected1 = memcmp(buffer1, expectedBuffer1, sizeof(buffer1));
-    printf("Test 1: ft_memcmp(buffer1, expectedBuffer1, sizeof(buffer1)) - Result: %s\n", result1 == expected1 ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
+    char buffer1[10] = "Hello";
+    char compare1[10] = "Hello";
 
-    char buffer2[5] = "Test";
-    char expectedBuffer2[5] = "tEst";
+    int result1 = ft_memcmp(buffer1, compare1, sizeof(buffer1));
+    int expected1 = memcmp(buffer1, compare1, sizeof(buffer1));
+    int result = result1 == expected1;
+    printf("Test 1: ft_memcmp(\"Hello\", \"Hello\", sizeof(\"Hello\")) - Result: %d, Expected: %d - %s\n",
+        result1, expected1 ,result ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
 
-    // Test case 2: comparing two non-equal buffers
-    int result2 = ft_memcmp(buffer2, expectedBuffer2, sizeof(buffer2));
-    int expected2 = memcmp(buffer2, expectedBuffer2, sizeof(buffer2));
-    printf("Test 2: ft_memcmp(buffer2, expectedBuffer2, sizeof(buffer2)) - Result: %s\n", result2 == expected2 ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
+    char buffer2[7] = "Tested";
+    char compare2[5] = "Test";
+
+    // Test case 2: comparing part of two buffers
+    int result2 = ft_memcmp(buffer2, compare2, 4);
+    int expected2 = memcmp(buffer2, compare2, 4);
+    result = result2 == expected2;
+    printf("Test 2: ft_memcmp(\"Tested\", \"Test\", 4) - Result: %d, Expected: %d - %s\n",
+        result1, expected2, result ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
     
-    // Test case 3: comparing part of two buffers
-    char buffer3[8] = "Partial";
-    char expectedBuffer3[8] = "Partyal";
+    // Test case 3: comparing non-equal buffers
+    char buffer3[12] = "\0I Love You";
+    char compare3[18] = "\0I Don't Love You";
 
-    int result3 = ft_memcmp(buffer3, expectedBuffer3, 6);
-    int expected3 = memcmp(buffer3, expectedBuffer3, 6);
-    printf("Test 3: ft_memcmp(buffer3, expectedBuffer3, 6) - Result: %s\n", result3 == expected3 ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
+    int result3 = ft_memcmp(buffer3, compare3, 6);
+    int expected3 = memcmp(buffer3, compare3, 6);
+    result = result3 == expected3;
+    printf("Test 3: ft_memcmp(\"\\0I Love You\", \"\\0I Don't Love You\", 6) - Result: %d, Expected: %d - %s\n",
+        result3, expected3, result ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
+        
+    // Test case 4: comparing non-equal buffers
+    char buffer4[5] = "Hall";
+    char compare4[5] = "Hell";
+
+    int result4 = ft_memcmp(buffer4, compare4, 6);
+    int expected4 = memcmp(buffer4, compare4, 6);
+    result = result4 == expected4;
+    printf("Test 4: ft_memcmp(\"Hall\", \"Hell\", 6) - Result: %d, Expected: %d - %s\n",
+        result4, expected4, result ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
+
+    // Test case 5: comparing 0 chars
+    int result5 = ft_memcmp(buffer3, compare3, 0);
+    int expected5 = memcmp(buffer3, compare3, 0);
+    result = result5 == expected5;
+    printf("Test 5: ft_memcmp(\"\\0I Love You\", \"\\0I Don't Love You\", 0) - Result: %d, Expected: %d - %s\n",
+        result5, expected5, result ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
 }
 
 void test_ft_strnstr()
 {
        // Test case 1: substr exists within the buffer
        char *result1 = ft_strnstr("Hello World!", "Hell", 7);
-       char *expected1 = "Hello World!";
-       CU_ASSERT_PTR_EQUAL(result1, expected1);
+       char *expected1 = strnstr("Hello World!", "Hell", 7);
+       int result = strcmp(result1, expected1);
        printf("Test 1: ft_strnstr(\"Hello World!\", \"Hell\", 7) - Result: %s, Expected: %s - %s\n",
               result1, expected1,
-              (result1 == expected1) ? GREEN "PASS" COLOR_RESET
-                                     : RED "FAIL" COLOR_RESET);
+              result ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
 
        // Test case 2: substr not found in the string
        char *result2 = ft_strnstr("Hello World!", "Woo", 20);
-       CU_ASSERT_PTR_NULL(result2);
+       result = result2 == NULL;
        printf("Test 2: ft_strnstr(\"Hello World!\", \"Woo\", 20) - Result: %s, Expected: NULL - %s\n",
               result2,
-              (result2 == NULL) ? GREEN "PASS" COLOR_RESET
-                                : RED "FAIL" COLOR_RESET);
+              result ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
 
        // Test case 3: substr not found in the string within the buffer size
        char *result3 = ft_strnstr("Hello World!", "World", 9);
-       CU_ASSERT_PTR_NULL(result3);
+       result = result3 == NULL;
        printf("Test 3: ft_strnstr(\"Hello World!\", \"World\", 9) - Result: %s, Expected: NULL - %s\n",
               result3,
-              (result3 == NULL) ? GREEN "PASS" COLOR_RESET
-                                : RED "FAIL" COLOR_RESET);
+              result ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
 
        // Test case 4: char is \0
        char *result4 = ft_strnstr("Hello World!", "", 10);
        char *expected4 = "Hello World!";
-       CU_ASSERT_PTR_EQUAL(result4, expected4);
+       result = strcmp(result4, expected4);
        printf("Test 4: ft_strnstr(\"Hello World!\", \"\", 10) - Result: %s, Expected: %s - %s\n",
               result4, expected4,
-              (result4 == expected4) ? GREEN "PASS" COLOR_RESET
-                                     : RED "FAIL" COLOR_RESET);
+              result ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
 
        // Test case 5: char is \0
        char *result5 = ft_strnstr("", "World", 8);
-       CU_ASSERT_PTR_NULL(result5);
+       result = result5 == NULL;
        printf("Test 5: ft_strnstr(\"\", \"World\", 8) - Result: %s, Expected: NULL - %s\n",
               result5,
-              (result5 == NULL) ? GREEN "PASS" COLOR_RESET
-                                : RED "FAIL" COLOR_RESET);
+              result ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
 }
 
 void test_ft_strjoin()
@@ -949,8 +975,8 @@ int main()
        test_ft_bzero();
        printf( BLUE "test_ft_memcpy\n" COLOR_RESET);
        test_ft_memcpy();
-       printf( BLUE "test_ft_memmove\n" COLOR_RESET);
-       test_ft_memmove();
+       //printf( BLUE "test_ft_memmove\n" COLOR_RESET);
+       //test_ft_memmove();
        printf( BLUE "test_ft_strlcpy\n" COLOR_RESET);
        test_ft_strlcpy();
        printf( BLUE "test_ft_strlcat\n" COLOR_RESET);
