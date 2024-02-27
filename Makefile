@@ -12,7 +12,7 @@ SRCS = ft_isalnum.c ft_isalpha.c ft_isascii.c ft_isdigit.c ft_isprint.c \
 	ft_atoi.c ft_striteri.c ft_strjoin.c ft_strmapi.c ft_substr.c \
 	ft_putchar_fd.c ft_putendl_fd.c ft_putnbr_fd.c ft_putstr_fd.c \
 
-BSRCS = ft_lstadd_back.c ft_lstadd_front.c ft_lstlast.c \
+BSRCS = ft_lstadd_back.c ft_lstadd_front.c ft_lstlast.c ft_lstmap.c\
 	ft_lstnew.c ft_lstsize.c ft_lstclear.c ft_lstdelone.c
 
 BOBJS = ${BSRCS:.c=.o}
@@ -42,7 +42,7 @@ bonus: $(NAME) $(BOBJS)
 	ar cr $(NAME) $(BOBJS)
 
 tests:
-	@$(CC) -o tests.out tests.c -L. -lft -I./ -lcunit
+	@$(CC) -o tests.out tests.c -L. -lft -I./
 	@./tests.out
 	@rm -f tests.out
 
