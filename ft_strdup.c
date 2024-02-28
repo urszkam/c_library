@@ -10,6 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+/*
+** This function returns a pointer to a null-terminated byte string, 
+** which is a duplicate of the string pointed to by s. The memory obtained 
+** is done dynamically using malloc and hence it can be freed using free(). 
+** It returns a pointer to the duplicated string s.
+*/
 #include "libft.h"
 
 char	*ft_strdup(const char *s)
