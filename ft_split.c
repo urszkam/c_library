@@ -49,7 +49,35 @@ static int	count_elements(char *str, char *charset)
 	return (res);
 }
 
-char	**ft_split(char *str, char *charset)
+static int	calc_len(char *str, char *charset)
+{
+	int	len;
+
+	len = 0;
+	while (!is_sep(*str, charset) && *str)
+	{
+		str++;
+		len++;
+	}
+	return (len + 1);
+}
+
+static char	*cpy_next_word(char *str, int len)
+{
+	int		i;
+	char	*dest;
+
+	dest = (char *) malloc((len + 1) * sizeof(char));
+	if (!dest)
+		return (NULL);
+	i = -1;
+	while (++i < len - 1)
+		dest[i] = str[i];
+	dest[i] = '\0';
+	return (dest);
+}
+
+static char	**ft_split(char *str, char *charset)
 {
 	char	**dest;
 	int		i;
@@ -61,9 +89,9 @@ char	**ft_split(char *str, char *charset)
 	i = 0;
 	while (*str)
 	{
-		word_len = ft_strlen(str, charset);
+		word_len = calc_len(str, charset);
 		if (word_len > 1)
-			dest[i++] = ft_strcpy(str, word_len);
+			dest[i++] = cpy_next_word(str, word_len);
 		str += word_len;
 	}
 	dest[i] = 0;
