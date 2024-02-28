@@ -44,14 +44,21 @@ bonus: $(NAME) $(BOBJS)
 
 tests:
 	@$(CC) -o tests.out tests.c -L. -lft -I./
+	@touch endl.txt nbr.txt str.txt char.txt 
 	@./tests.out
+	@rm -f tests.out
+	
+memory_leaks:
+	@$(CC) -o tests.out tests.c -L. -lft -I./
+	@touch endl.txt nbr.txt str.txt char.txt 
+	valgrind --leak-check=full ./tests.out
 	@rm -f tests.out
 
 tclean:
 	@rm -f *.txt
 
 bonus-tests:
-	@$(CC) -o bonus_tests.out bonus_tests.c -L. -lft -I./ -lcunit
+	@$(CC) -o bonus_tests.out bonus_tests.c -L. -lft -I./
 	@./bonus_tests.out
 	@rm -f bonus_tests.out
 
