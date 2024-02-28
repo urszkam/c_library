@@ -1105,6 +1105,28 @@ void test_ft_striteri()
               result2, result ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
 }
 
+static void test_ft_putchar_fd()
+{
+    //Test 1: Output to a .txt file
+    int fd1 = open("char.txt", O_WRONLY | O_CREAT);
+    char c1 = 'a';
+    ft_putchar_fd(c1, fd1);
+    close(fd1);
+    fd1 = open("char.txt", O_RDONLY | O_CREAT);
+    char* result1 = (char*)calloc(5, sizeof(char));
+    int x = read(fd1, result1, 5);
+    int result = c1 == result1[0];
+    printf("Test 1: ft_putchar_fd('a', fd), Result: %s, Expected: %c - %s\n",
+        result1, c1, result ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
+    close(fd1);
+    free(result1);
+    
+    //Test 2: Stdout
+    char c2 = '\t';
+    ft_putchar_fd(c2, 1);
+    printf("Test 2: ft_putchar_fd('\t', 1): if this line starts with tab, stdout is working");
+}
+
 int main()
 {
        printf( BLUE "test_ft_isalpha\n" COLOR_RESET);
@@ -1167,8 +1189,8 @@ int main()
        test_ft_strmapi();
        printf( BLUE "test_ft_striteri\n" COLOR_RESET);
        test_ft_striteri();
-       // printf( BLUE "test_ft_putchar_fd\n" COLOR_RESET);
-       // test_ft_putchar_fd();
+       printf( BLUE "test_ft_putchar_fd\n" COLOR_RESET);
+       test_ft_putchar_fd();
        // printf( BLUE "test_ft_putstr_fd\n" COLOR_RESET);
        // test_ft_putstr_fd();
        // printf( BLUE "test_ft_putendl_fd\n" COLOR_RESET);
