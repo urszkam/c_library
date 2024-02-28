@@ -47,6 +47,9 @@ tests:
 	@./tests.out
 	@rm -f tests.out
 
+tclean:
+	@rm -f *.txt
+
 bonus-tests:
 	@$(CC) -o bonus_tests.out bonus_tests.c -L. -lft -I./ -lcunit
 	@./bonus_tests.out
