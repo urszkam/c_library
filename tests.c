@@ -1,4 +1,5 @@
 #include "libft.h"
+#include <fcntl.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <ctype.h>
@@ -42,10 +43,10 @@ static int  arrcmp(char **arr1, char **arr2)
     while (arr1[i] && arr2[i])
     {
         if (!arr1[i] || !arr2[i] || strcmp(arr1[i], arr2[i]) != 0)
-            return (0);
+            return (-1);
         i++;
     }
-    return (1);
+    return (0);
 }
 
 static void free_array(char **arr)
@@ -73,24 +74,14 @@ static void print_arr(char **arr)
 
 void test_ft_memset()
 {
-    // Test case 1: filling an empty buffer
-    char buffer1[10];
-    char expected1[10];
-
-    ft_memset(buffer1, 'A', 3);
-    memset(expected1, 'A', 3);
-    int result1 = memcmp(buffer1, expected1, sizeof(buffer1)) == 0;
-    printf("Test 1: ft_memset(buffer[10], 'A', 3) - Result: %s, Expected: %s - %s\n",
-        buffer1, expected1, result1 ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
-
     // Test case 2: filling an entire buffer with a constant value
     char buffer2[5] = "Test";
     char expected2[5] = "Test";
 
     ft_memset(buffer2, 'X', sizeof(buffer2) - 1);
     memset(expected2, 'X', sizeof(expected2) - 1);
-    int result2 = memcmp(buffer2, expected2, sizeof(buffer2) - 1) == 0;
-    printf("Test 2: ft_memset(\"Test\", 'X', sizeof(buffer2) - 1) - Result: %s, Expected: %s - %s\n",
+    int result2 = memcmp(buffer2, expected2, sizeof(buffer2)) == 0;
+    printf("Test 1: ft_memset(\"Test\", 'X', sizeof(buffer2) - 1) - Result: %s, Expected: %s - %s\n",
         buffer2, expected2, result2 ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
     
     // Test case 3: filling part of a buffer with a constant value
@@ -100,7 +91,7 @@ void test_ft_memset()
     ft_memset(buffer3 + 3, 'X', 3);
     memset(expected3 + 3, 'X', 3);
     int result3 = memcmp(buffer3, expected3, sizeof(buffer3)) == 0;
-    printf("Test 3: ft_memset(\"Love You\" + 3, 'X', 3) - Result: %s, Expected: %s - %s\n",
+    printf("Test 2: ft_memset(\"Love You\" + 3, 'X', 3) - Result: %s, Expected: %s - %s\n",
         buffer3, expected3, result3 ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
 }
 
@@ -756,10 +747,10 @@ void test_ft_memcmp()
 void test_ft_strnstr()
 {
        // Test case 1: substr exists within the buffer
-       char *result1 = ft_strnstr("Hello World!", "Hell", 7);
-       char *expected1 = "Hello World!";
-       int result = strcmp(result1, expected1);
-       printf("Test 1: ft_strnstr(\"Hello World!\", \"Hell\", 7) - Result: %s, Expected: %s - %s\n",
+       char *result1 = ft_strnstr("Hello World!", "ell", 7);
+       char *expected1 = "ello World!";
+       int result = strcmp(result1, expected1) == 0;
+       printf("Test 1: ft_strnstr(\"Hello World!\", \"ell\", 7) - Result: %s, Expected: %s - %s\n",
               result1, expected1,
               result ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
 
@@ -780,7 +771,7 @@ void test_ft_strnstr()
        // Test case 4: char is \0
        char *result4 = ft_strnstr("Hello World!", "", 10);
        char *expected4 = "Hello World!";
-       result = strcmp(result4, expected4);
+       result = strcmp(result4, expected4) == 0;
        printf("Test 4: ft_strnstr(\"Hello World!\", \"\", 10) - Result: %s, Expected: %s - %s\n",
               result4, expected4,
               result ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
@@ -853,6 +844,61 @@ void test_ft_strtrim()
        free(result4);
 }
 
+void test_ft_split()
+{
+    // Test case 1: Multiple words, multiple separators
+    char *str1 = "!Hello,World!!This,is,a,,,,,!test!";
+    char *charset1 = ", !";
+    char **result1 = ft_split(str1, charset1);
+    char *expected1[] = {"Hello", "World", "This", "is", "a", "test", 0};
+    int result = arrcmp(result1, expected1) == 0;
+    printf("Test 1: ft_split(\"!Hello,Worl<d!!This,is,a,,,,,!test!\", \", !\") - Result: {");
+    print_arr(result1);
+    printf("NULL}, Expected: {");
+    print_arr(expected1);
+    printf("NULL} %s\n", result ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
+    free_array(result1);
+    
+    // Test case 2: Multiple words, single separator
+    char *str2 = "    I   Love You  ";
+    char *charset2 = " ";
+    char **result2 = ft_split(str2, charset2);
+    char *expected2[] = {"I", "Love", "You", 0};
+    result = arrcmp(result2, expected2) == 0;
+    printf("Test 2: ft_split(\"    I   Love You  \", \" \") - Result: {");
+    print_arr(result2);
+    printf("NULL}, Expected: {");
+    print_arr(expected2);
+    printf("NULL} %s\n", result ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
+    free_array(result2);
+    
+    // Test case 3: Single word
+    char *str3 = "42Warsaw";
+    char *charset3 = ",-";
+    char **result3 = ft_split(str3, charset3);
+    char *expected3[] = {"42Warsaw", 0};
+    result = arrcmp(result3, expected3) == 0;
+    printf("Test 3: ft_split(\"42Warsaw\", \",-\") - Result: {");
+    print_arr(result3);
+    printf("NULL}, Expected: {");
+    print_arr(expected3);
+    printf("NULL} %s\n", result ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
+    free_array(result3);
+    
+    // Test case 4: Empty string
+    char *str4 = "";
+    char *charset4 = "";
+    char **result4 = ft_split(str4, charset4);
+    char *expected4[] = {0};
+    result = arrcmp(result4, expected4) == 0;
+    printf("Test 4: ft_split(\"\", \"\") - Result: {");
+    print_arr(result4);
+    printf("NULL}, Expected: {");
+    print_arr(expected4);
+    printf("NULL} %s\n", result ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
+    free_array(result4);
+}
+
 void test_ft_atoi()
 {
        // Test case 1: Positive integer
@@ -905,7 +951,7 @@ void test_ft_calloc()
     void *expected1 = calloc(size1, elem_size1);
     int result = memcmp(result1, expected1, size1 * elem_size1) == 0;
     printf("Test 1: ft_calloc(5, sizeof(int)) - Result: %s\n",
-        result ? GREEN "Pass" RESET_COLOR : RED "Fail" RESET_COLOR);
+        result ? GREEN "Pass" COLOR_RESET : RED "Fail" COLOR_RESET);
     free(result1);
     free(expected1);
 
@@ -916,7 +962,7 @@ void test_ft_calloc()
     char *expected2 = calloc(size2, elem_size2);
     result = memcmp(result2, expected2, size2 * elem_size2) == 0;
     printf("Test 2: ft_calloc(8, sizeof(char)) - Result: %s\n",
-        result ? GREEN "Pass" RESET_COLOR : RED "Fail" RESET_COLOR);
+        result ? GREEN "Pass" COLOR_RESET : RED "Fail" COLOR_RESET);
     free(result2);
     free(expected2);
 
@@ -932,7 +978,7 @@ void test_ft_calloc()
     CustomStruct *expected3 = calloc(size3, elem_size3);
     result = memcmp(result3, expected3, size3 * elem_size3) == 0;
     printf("Test 2: ft_calloc(3, sizeof(CustomStruct)) - Result: %s\n",
-        result ? GREEN "Pass" RESET_COLOR : RED "Fail" RESET_COLOR);
+        result ? GREEN "Pass" COLOR_RESET : RED "Fail" COLOR_RESET);
     free(result3);
     free(expected3);
 }
@@ -945,8 +991,9 @@ void test_ft_strdup()
     char *expected1 = strdup(str1);
     int result = strcmp(expected1, result1) == 0;
     printf("Test 1: ft_strdup(\"Hello, World!\") - Result: %s, Expected: %s - %s\n", result1, expected1,
-        result ? GREEN "Pass" RESET_COLOR : RED "Fail" RESET_COLOR);
+        result ? GREEN "Pass" COLOR_RESET : RED "Fail" COLOR_RESET);
     free(result1);
+    free(expected1);
 
     // Test case 2: Empty string
     char str2[] = "";
@@ -954,24 +1001,27 @@ void test_ft_strdup()
     char *expected2 = strdup(str2);
     result = strcmp(expected2, result2) == 0;
     printf("Test 2: ft_strdup(\"\") - Result: %s, Expected: %s - %s\n", result2, expected2,
-        result ? GREEN "Pass" RESET_COLOR : RED "Fail" RESET_COLOR);
+        result ? GREEN "Pass" COLOR_RESET : RED "Fail" COLOR_RESET);
     free(result2);
+    free(expected2);
 
     // Test case 3: String with spaces
     char str3[] = "   Spaces   ";
     char *result3 = ft_strdup(str3);
     char *expected3 = strdup(str3);
     result = strcmp(expected3, result3) == 0;
-    printf("Test 3: ft_strdup(\"   Spaces   \") - Result: %s, Expected: %s - %s\n", result3, expected3,
-        result ? GREEN "Pass" RESET_COLOR : RED "Fail" RESET_COLOR);
+    printf("Test 3: ft_strdup(\"   Spaces   \") - Result: %s, Expected: %s - %s\n", 
+    	result3, expected3,
+        result ? GREEN "Pass" COLOR_RESET : RED "Fail" COLOR_RESET);
     free(result3);
+    free(expected3);
     
     // Test case 4: String with special characters
     char str4[] = "!@#";
     char *result4 = ft_strdup(str4);
     result = strcmp(str4, result4) == 0;
     printf("Test 4: ft_strdup(\"!@#\") - Result: %s, Expected: %s - %s\n", result4, str4,
-        result ? GREEN "Pass" RESET_COLOR : RED "Fail" RESET_COLOR);
+        result ? GREEN "Pass" COLOR_RESET : RED "Fail" COLOR_RESET);
     free(result4);
 }
 
@@ -1012,48 +1062,10 @@ void test_ft_substr()
        // Test case 5: Start exceeding string length
        char *result5 = ft_substr("Substring", 20, 5);
        char *expected5 = "";
-       result = strcmp(resulvoid test_ft_putendl_fd()
-{
-    //Test 1: Output to a .txt file
-    int fd1 = open("endl.txt", O_WRONLY | O_CREAT);
-    char *str1 = "Hello World!";
-    char *expected1 = "Hello World!\n";
-    ft_putendl_fd(str1, fd1);
-    close(fd1);
-    fd1 = open("endl.txt", O_RDONLY | O_CREAT);
-    char* result1 = (char*) calloc(20, sizeof(char));
-    int x = read(fd1, result1, 20);
-    int result = strcmp(result1, expected1) == 0;
-    printf("Test 1: ft_putendl_fd(\"-12345\", fd) - %s\n",
-        result ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
-    close(fd1);
-    free(result1);
-    
-    //Test 1: Output empty string to a .txt file
-    int fd2 = open("endl.txt", O_WRONLY | O_CREAT);
-    char *str2 = "";
-    char *expected2 = "\n";
-    ft_putendl_fd(str2, fd2);
-    close(fd2);
-    fd1 = open("endl.txt", O_RDONLY | O_CREAT);
-    char* result2 = (char*) calloc(10, sizeof(char));
-    x = read(fd2, result2, strlen(str2)+1);
-    result = strcmp(result2, expected2) == 0;
-    printf("Test 2: ft_putendl_fd(\"-2147483648\", fd) - %s\n",
-        result ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
-    close(fd2);
-    free(result2);
-    
-    //Test 2: Stdout
-    char *str3 = " ";
-    int n3 = atoi(str3);
-    ft_putendl_fd(str3, 1);
-    printf("Test 3: ft_putendl_fd(\"\", 1): if there's an empty line above, stdout is working");
-}t5, expected5) == 0;
+       result = strcmp(result5, expected5) == 0;
        printf("Test 5: ft_substr(\"Substring\", 20, 5) - Result: %s, Expected: %s - %s\n",
               result5, expected5,
-              result ? GREEN "PASS" COLOR_RESET
-                                              : RED "FAIL" COLOR_RESET);
+              result ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
        free(result1);
        free(result2);
        free(result3);
@@ -1067,35 +1079,35 @@ void test_ft_itoa()
     int num1 = 12345;
     char *result1 = ft_itoa(num1);
     printf("Test 1: ft_itoa(%d) - Result: %s - %s\n", num1, result1,
-        num1 == atoi(result1) ? GREEN "Pass" RESET_COLOR : RED "Fail" RESET_COLOR);
+        num1 == atoi(result1) ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
     free(result1);
 
     // Test case 2: Negative number
     int num2 = -98765;
     char *result2 = ft_itoa(num2);
     printf("Test 2: ft_itoa(%d) - Result: %s - %s\n", num2, result2,
-        num2 == atoi(result2) ? GREEN "Pass" RESET_COLOR : RED "Fail" RESET_COLOR);
+        num2 == atoi(result2) ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
     free(result2);
 
     // Test case 3: Zero
     int num3 = 0;
     char *result3 = ft_itoa(num3);
     printf("Test 3: ft_itoa(%d) - Result: %s - %s\n", num3, result3,
-        num3 == atoi(result3) ? GREEN "Pass" RESET_COLOR : RED "Fail" RESET_COLOR);
+        num3 == atoi(result3) ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
     free(result3);
 
     // Test case 4: Minimum integer value
     int num4 = -2147483648;
     char *result4 = ft_itoa(num4);
     printf("Test 4: ft_itoa(%d) - Result: %s - %s\n", num4, result4,
-        num4 == atoi(result4) ? GREEN "Pass" RESET_COLOR : RED "Fail" RESET_COLOR);
+        num4 == atoi(result4) ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
     free(result4);
 
     // Test case 5: Maximum integer value
     int num5 = 2147483647;
     char *result5 = ft_itoa(num5);
     printf("Test 5: ft_itoa(%d) - Result: %s - %s\n", num5, result5,
-        num5 == atoi(result5) ? GREEN "Pass" RESET_COLOR : RED "Fail" RESET_COLOR);
+        num5 == atoi(result5) ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
     free(result5);
 }
 
@@ -1161,7 +1173,7 @@ void test_ft_putchar_fd()
     //Test 2: Stdout
     char c2 = '\t';
     ft_putchar_fd(c2, 1);
-    printf("Test 2: ft_putchar_fd('\t', 1): if this line starts with tab, stdout is working");
+    printf("Test 2: ft_putchar_fd('\t', 1): if this line starts with tab, stdout is working\n");
 }
 
 void test_ft_putstr_fd()
@@ -1183,7 +1195,7 @@ void test_ft_putstr_fd()
     //Test 2: Stdout
     char *str2 = "\t~~~~!";
     ft_putstr_fd(str2, 1);
-    printf("Test 2: ft_putstr_fd('\\t~~~~!', 1): if this line starts with tab, stdout is working");
+    printf("Test 2: ft_putstr_fd('\\t~~~~!', 1): if this line starts with tab, stdout is working\n");
 }
 
 void test_ft_putendl_fd()
@@ -1222,7 +1234,7 @@ void test_ft_putendl_fd()
     char *str3 = " ";
     int n3 = atoi(str3);
     ft_putendl_fd(str3, 1);
-    printf("Test 3: ft_putendl_fd(\"\", 1): if there's an empty line above, stdout is working");
+    printf("Test 3: ft_putendl_fd(\"\", 1): if there's an empty line above, stdout is working\n");
 }
 
 void test_ft_putnbr_fd()
@@ -1249,7 +1261,7 @@ void test_ft_putnbr_fd()
     ft_putnbr_fd(n2, fd2);
     close(fd2);
     fd1 = open("nbr.txt", O_RDONLY | O_CREAT);
-    char* result2 = (char*) calloc(10, sizeof(char));
+    char* result2 = (char*) calloc(13, sizeof(char));
     x = read(fd2, result2, strlen(str2));
     result = strcmp(result2, str2) == 0;
     printf("Test 2: ft_putnbr_fd(\"-2147483648\", fd), Result: %s, Expected: %s - %s\n",
@@ -1261,7 +1273,7 @@ void test_ft_putnbr_fd()
     char *str3 = "111111";
     int n3 = atoi(str3);
     ft_putnbr_fd(n3, 1);
-    printf("Test 3: ft_putnbr_fd(\"111111\", 1): if this line starts with 111111, stdout is working");
+    printf("Test 3: ft_putnbr_fd(\"111111\", 1): if this line starts with 111111, stdout is working\n");
 }
 
 int main()
