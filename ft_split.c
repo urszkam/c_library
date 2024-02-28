@@ -77,7 +77,7 @@ static char	*cpy_next_word(char *str, int len)
 	return (dest);
 }
 
-static char	**ft_split(char *str, char *charset)
+char	**ft_split(char *str, char *charset)
 {
 	char	**dest;
 	int		i;
