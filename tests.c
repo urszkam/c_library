@@ -1105,7 +1105,7 @@ void test_ft_striteri()
               result2, result ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
 }
 
-static void test_ft_putchar_fd()
+void test_ft_putchar_fd()
 {
     //Test 1: Output to a .txt file
     int fd1 = open("char.txt", O_WRONLY | O_CREAT);
@@ -1125,6 +1125,28 @@ static void test_ft_putchar_fd()
     char c2 = '\t';
     ft_putchar_fd(c2, 1);
     printf("Test 2: ft_putchar_fd('\t', 1): if this line starts with tab, stdout is working");
+}
+
+void test_ft_putstr_fd()
+{
+    //Test 1: Output to a .txt file
+    int fd1 = open("str.txt", O_WRONLY | O_CREAT);
+    char *str1 = "Hello World!";
+    ft_putstr_fd(str1, fd1);
+    close(fd1);
+    fd1 = open("str.txt", O_RDONLY | O_CREAT);
+    char* result1 = (char*)calloc(strlen(str1) + 1, sizeof(char));
+    int x = read(fd1, result1, strlen(str1));
+    int result = strcmp(result1, str1) == 0;
+    printf("Test 1: ft_putstr_fd(\"Hello World!\", fd), Result: %s, Expected: %s - %s\n",
+        result1, str1, result ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
+    close(fd1);
+    free(result1);
+    
+    //Test 2: Stdout
+    char *str2 = "\t~~~~!";
+    ft_putstr_fd(str2, 1);
+    printf("Test 2: ft_putstr_fd('\\t~~~~!', 1): if this line starts with tab, stdout is working");
 }
 
 int main()
@@ -1191,8 +1213,8 @@ int main()
        test_ft_striteri();
        printf( BLUE "test_ft_putchar_fd\n" COLOR_RESET);
        test_ft_putchar_fd();
-       // printf( BLUE "test_ft_putstr_fd\n" COLOR_RESET);
-       // test_ft_putstr_fd();
+       printf( BLUE "test_ft_putstr_fd\n" COLOR_RESET);
+       test_ft_putstr_fd();
        // printf( BLUE "test_ft_putendl_fd\n" COLOR_RESET);
        // test_ft_putendl_fd();
        // printf( BLUE "test_ft_putnbr_fd\n" COLOR_RESET);
