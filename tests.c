@@ -36,6 +36,39 @@ static void a_to_X(unsigned int i, char *c)
               *c = 'X';
 }
 
+static int  arrcmp(char **arr1, char **arr2)
+{
+    int i = 0;
+    while (arr1[i] && arr2[i])
+    {
+        if (!arr1[i] || !arr2[i] || strcmp(arr1[i], arr2[i]) != 0)
+            return (0);
+        i++;
+    }
+    return (1);
+}
+
+static void free_array(char **arr)
+{
+    int i = 0;
+    while (arr[i])
+    {
+        free(arr[i]);
+        i++;
+    }
+    free(arr);
+}
+
+static void print_arr(char **arr)
+{
+    int i = 0;
+    while (arr[i])
+    {
+        printf("%s, ", arr[i]);
+        i++;
+    }
+}
+
 /* Function Tests */
 
 void test_ft_memset()
@@ -1126,8 +1159,8 @@ int main()
        test_ft_strjoin();
        printf( BLUE "test_ft_strtrim\n" COLOR_RESET);
        test_ft_strtrim();
-       // printf( BLUE "test_ft_split\n" COLOR_RESET);
-       // test_ft_split();
+       printf( BLUE "test_ft_split\n" COLOR_RESET);
+       test_ft_split();
        printf( BLUE "test_ft_itoa\n" COLOR_RESET);
        test_ft_itoa();
        printf( BLUE "test_ft_strmapi\n" COLOR_RESET);
