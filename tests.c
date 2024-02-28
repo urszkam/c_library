@@ -1149,6 +1149,45 @@ void test_ft_putstr_fd()
     printf("Test 2: ft_putstr_fd('\\t~~~~!', 1): if this line starts with tab, stdout is working");
 }
 
+static void test_ft_putstr_fd()
+{
+    //Test 1: Output to a .txt file
+    int fd1 = open("nbr.txt", O_WRONLY | O_CREAT);
+    char *str1 = "-12345";
+    int n1 = atoi(str1);
+    ft_putnbr_fd(n1, fd1);
+    close(fd1);
+    fd1 = open("nbr.txt", O_RDONLY | O_CREAT);
+    char* result1 = (char*) calloc(10, sizeof(char));
+    int x = read(fd1, result1, strlen(str1));
+    int result = strcmp(result1, str1) == 0;
+    printf("Test 1: ft_putnbr_fd(\"-12345\", fd), Result: %s, Expected: %s - %s\n",
+        result1, str1, result ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
+    close(fd1);
+    free(result1);
+    
+    //Test 2: Output min int to a .txt file
+    int fd2 = open("nbr.txt", O_WRONLY | O_CREAT);
+    char *str2 = "-2147483648";
+    int n2 = atoi(str2);
+    ft_putnbr_fd(n2, fd2);
+    close(fd2);
+    fd1 = open("nbr.txt", O_RDONLY | O_CREAT);
+    char* result2 = (char*) calloc(10, sizeof(char));
+    x = read(fd2, result2, strlen(str2));
+    result = strcmp(result2, str2) == 0;
+    printf("Test 2: ft_putnbr_fd(\"-2147483648\", fd), Result: %s, Expected: %s - %s\n",
+        result2, str2, result ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
+    close(fd2);
+    free(result2);
+    
+    //Test 2: Stdout
+    char *str3 = "111111";
+    int n3 = atoi(str3);
+    ft_putnbr_fd(n3, 1);
+    printf("Test 3: ft_putnbr_fd(\"111111\", 1): if this line starts with 111111, stdout is working");
+}
+
 int main()
 {
        printf( BLUE "test_ft_isalpha\n" COLOR_RESET);
@@ -1217,8 +1256,8 @@ int main()
        test_ft_putstr_fd();
        // printf( BLUE "test_ft_putendl_fd\n" COLOR_RESET);
        // test_ft_putendl_fd();
-       // printf( BLUE "test_ft_putnbr_fd\n" COLOR_RESET);
-       // test_ft_putnbr_fd();
+       printf( BLUE "test_ft_putnbr_fd\n" COLOR_RESET);
+       test_ft_putnbr_fd();
 
        return (0);
 }
