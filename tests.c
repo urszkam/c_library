@@ -1012,7 +1012,44 @@ void test_ft_substr()
        // Test case 5: Start exceeding string length
        char *result5 = ft_substr("Substring", 20, 5);
        char *expected5 = "";
-       result = strcmp(result5, expected5) == 0;
+       result = strcmp(resulvoid test_ft_putendl_fd()
+{
+    //Test 1: Output to a .txt file
+    int fd1 = open("endl.txt", O_WRONLY | O_CREAT);
+    char *str1 = "Hello World!";
+    char *expected1 = "Hello World!\n";
+    ft_putendl_fd(str1, fd1);
+    close(fd1);
+    fd1 = open("endl.txt", O_RDONLY | O_CREAT);
+    char* result1 = (char*) calloc(20, sizeof(char));
+    int x = read(fd1, result1, 20);
+    int result = strcmp(result1, expected1) == 0;
+    printf("Test 1: ft_putendl_fd(\"-12345\", fd) - %s\n",
+        result ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
+    close(fd1);
+    free(result1);
+    
+    //Test 1: Output empty string to a .txt file
+    int fd2 = open("endl.txt", O_WRONLY | O_CREAT);
+    char *str2 = "";
+    char *expected2 = "\n";
+    ft_putendl_fd(str2, fd2);
+    close(fd2);
+    fd1 = open("endl.txt", O_RDONLY | O_CREAT);
+    char* result2 = (char*) calloc(10, sizeof(char));
+    x = read(fd2, result2, strlen(str2)+1);
+    result = strcmp(result2, expected2) == 0;
+    printf("Test 2: ft_putendl_fd(\"-2147483648\", fd) - %s\n",
+        result ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
+    close(fd2);
+    free(result2);
+    
+    //Test 2: Stdout
+    char *str3 = " ";
+    int n3 = atoi(str3);
+    ft_putendl_fd(str3, 1);
+    printf("Test 3: ft_putendl_fd(\"\", 1): if there's an empty line above, stdout is working");
+}t5, expected5) == 0;
        printf("Test 5: ft_substr(\"Substring\", 20, 5) - Result: %s, Expected: %s - %s\n",
               result5, expected5,
               result ? GREEN "PASS" COLOR_RESET
@@ -1149,7 +1186,46 @@ void test_ft_putstr_fd()
     printf("Test 2: ft_putstr_fd('\\t~~~~!', 1): if this line starts with tab, stdout is working");
 }
 
-static void test_ft_putstr_fd()
+void test_ft_putendl_fd()
+{
+    //Test 1: Output to a .txt file
+    int fd1 = open("endl.txt", O_WRONLY | O_CREAT);
+    char *str1 = "Hello World!";
+    char *expected1 = "Hello World!\n";
+    ft_putendl_fd(str1, fd1);
+    close(fd1);
+    fd1 = open("endl.txt", O_RDONLY | O_CREAT);
+    char* result1 = (char*) calloc(20, sizeof(char));
+    int x = read(fd1, result1, 20);
+    int result = strcmp(result1, expected1) == 0;
+    printf("Test 1: ft_putendl_fd(\"-12345\", fd) - %s\n",
+        result ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
+    close(fd1);
+    free(result1);
+    
+    //Test 1: Output empty string to a .txt file
+    int fd2 = open("endl.txt", O_WRONLY | O_CREAT);
+    char *str2 = "";
+    char *expected2 = "\n";
+    ft_putendl_fd(str2, fd2);
+    close(fd2);
+    fd1 = open("endl.txt", O_RDONLY | O_CREAT);
+    char* result2 = (char*) calloc(10, sizeof(char));
+    x = read(fd2, result2, strlen(str2)+1);
+    result = strcmp(result2, expected2) == 0;
+    printf("Test 2: ft_putendl_fd(\"-2147483648\", fd) - %s\n",
+        result ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
+    close(fd2);
+    free(result2);
+    
+    //Test 2: Stdout
+    char *str3 = " ";
+    int n3 = atoi(str3);
+    ft_putendl_fd(str3, 1);
+    printf("Test 3: ft_putendl_fd(\"\", 1): if there's an empty line above, stdout is working");
+}
+
+void test_ft_putnbr_fd()
 {
     //Test 1: Output to a .txt file
     int fd1 = open("nbr.txt", O_WRONLY | O_CREAT);
@@ -1181,7 +1257,7 @@ static void test_ft_putstr_fd()
     close(fd2);
     free(result2);
     
-    //Test 2: Stdout
+    //Test 3: Stdout
     char *str3 = "111111";
     int n3 = atoi(str3);
     ft_putnbr_fd(n3, 1);
@@ -1254,8 +1330,8 @@ int main()
        test_ft_putchar_fd();
        printf( BLUE "test_ft_putstr_fd\n" COLOR_RESET);
        test_ft_putstr_fd();
-       // printf( BLUE "test_ft_putendl_fd\n" COLOR_RESET);
-       // test_ft_putendl_fd();
+       printf( BLUE "test_ft_putendl_fd\n" COLOR_RESET);
+       test_ft_putendl_fd();
        printf( BLUE "test_ft_putnbr_fd\n" COLOR_RESET);
        test_ft_putnbr_fd();
 
