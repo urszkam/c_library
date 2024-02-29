@@ -7,12 +7,29 @@
 ** If either dest or src is an invalid or null pointer, 
 ** the behavior is undefined, even if the count is zero.
 */
+
 #include "libft.h"
 
-void *ft_memmove(void *dest, const void *src, size_t n)
+void	*ft_memmove(void *dest, const void *src, size_t n)
 {
-    unsigned char   *temp;
-    size_t i;
+	unsigned char	*temp_d;
+	unsigned char	*temp_s;
+	size_t			i;
 
-    temp = (unsigned char*) src;
+	temp_d = (unsigned char *) dest;
+	temp_s = (unsigned char *) src;
+	i = 0;
+	if (temp_d > temp_s)
+	{
+		while (n--)
+			temp_d[n] = temp_c[n];
+	}
+	else
+	{
+		while (i < n)
+		{
+			temp_d[i] = temp_c[n];
+			i++;
+		}
+	}
 }
