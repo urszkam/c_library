@@ -40,7 +40,7 @@ clean:
 re: fclean all
 
 bonus: $(NAME) $(BOBJS)
-	ar cr $(NAME) $(BOBJS)
+	@ar cr $(NAME) $(BOBJS)
 
 tests:
 	@$(CC) -o tests.out tests.c -L. -lft -I./
