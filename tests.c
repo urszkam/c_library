@@ -164,36 +164,46 @@ void test_ft_memcpy()
     printf("Test 3: ft_memcpy(\"Love You\" + 3, \"\", 4) - Result: %s, Expected: %s - %s\n",
         destination3, expected3, result3 ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
 }
-/*
+
 void test_ft_memmove()
 {
     char source1[10] = "Hello";
-    char destination1[10] = "World";
-    char expectedDestination1[10] = "Hello";
+    char result1[10] = "World";
+    char expected1[10] = "World";
 
     // Test case 1: moving from a non-empty source to a non-empty destination
-    ft_memmove(destination1, source1, 5);
-    int result1 = memcmp(destination1, expectedDestination1, sizeof(destination1)) == 0;
-    printf("Test 1: ft_memmove(destination1, source1, 5) - Result: %s\n", result1 ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
+    ft_memmove(result1 + 1, source1, 5);
+    memmove(expected1 + 1, source1, 5);
+    int result = memcmp(result1, expected1, sizeof(result1)) == 0;
+    printf("Test 1: ft_memmove(destination1 + 1, source1, 5) - Result: %s, Expected: %s - %s\n",
+    	result1, expected1, 
+    	result ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
 
     char source2[5] = "Test";
-    char destination2[5] = "";
-    char expectedDestination2[5] = "Test";
+    char result2[5] = "";
+    char expected2[5] = "";
 
     // Test case 2: moving from a non-empty source to an empty destination
-    ft_memmove(destination2, source2, sizeof(source2));
-    int result2 = memcmp(destination2, expectedDestination2, sizeof(destination2)) == 0;
-    printf("Test 2: ft_memmove(destination2, source2, sizeof(source2)) - Result: %s\n", result2 ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
-    
-    // Test case 3: overlapping move from a non-empty source to part of a destination
-    char source3[8] = "Partial";
-    char destination3[8] = "XXXXXXX";
-    char expectedDestination3[8] = "PartXXX";
+    ft_memmove(result2, source2, sizeof(source2));
+    memmove(expected2, source2, sizeof(source2));
+    result = memcmp(result2, expected2, sizeof(result2)) == 0;
+    printf("Test 2: ft_memmove(\"\", \"Test\", sizeof(\"Test\")) - Result: %s, Expected: %s - %s\n",
+    result2, expected2,
+    result ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
 
-    ft_memmove(destination3 + 3, source3, 4);
-    int result3 = memcmp(destination3, expectedDestination3, sizeof(destination3)) == 0;
-    printf("Test 3: ft_memmove(destination3 + 3, source3, 4) - Result: %s\n", result3 ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
-}*/
+    // Test case 3: overlapping move from a non-empty source to part of a destination
+    char source3[9] = "Love You";
+    char result3[8] = "XXXXXXX";
+    char expected3[8] = "XXXXXXX";
+
+    ft_memmove(result3 + 3, source3, 4);
+    memmove(expected3 + 3, source3, 4);
+    result = memcmp(result3, expected3, sizeof(result3)) == 0;
+    printf("Test 3: ft_memmove(\"XXXXXXX\" + 3, \"Love You\", 3) - Result: %s, Expected: %s - %s\n",
+    	result3, expected3,
+    	result ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
+
+}
 
 void test_ft_isalnum()
 {
@@ -769,10 +779,10 @@ void test_ft_strnstr()
               result ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
 
        // Test case 4: char is \0
-       char *result4 = ft_strnstr("Hello World!", "", 10);
+       char *result4 = ft_strnstr("Hello World!", "\0", 20);
        char *expected4 = "Hello World!";
        result = strcmp(result4, expected4) == 0;
-       printf("Test 4: ft_strnstr(\"Hello World!\", \"\", 10) - Result: %s, Expected: %s - %s\n",
+       printf("Test 4: ft_strnstr(\"Hello World!\", \"\\0\", 20) - Result: %s, Expected: %s - %s\n",
               result4, expected4,
               result ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
 
@@ -1296,8 +1306,8 @@ int main()
        test_ft_bzero();
        printf( BLUE "test_ft_memcpy\n" COLOR_RESET);
        test_ft_memcpy();
-       //printf( BLUE "test_ft_memmove\n" COLOR_RESET);
-       //test_ft_memmove();
+       printf( BLUE "test_ft_memmove\n" COLOR_RESET);
+       test_ft_memmove();
        printf( BLUE "test_ft_strlcpy\n" COLOR_RESET);
        test_ft_strlcpy();
        printf( BLUE "test_ft_strlcat\n" COLOR_RESET);
