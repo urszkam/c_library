@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ukaminsk <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/29 21:13:15 by ukaminsk          #+#    #+#             */
+/*   Updated: 2024/02/29 21:13:19 by ukaminsk         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 /*
 ** Copies count characters from the object pointed to by src to the object 
 ** pointed to by dest. Both objects are reinterpreted as arrays 
@@ -22,14 +34,15 @@ void	*ft_memmove(void *dest, const void *src, size_t n)
 	if (temp_d > temp_s)
 	{
 		while (n--)
-			temp_d[n] = temp_c[n];
+			temp_d[n] = temp_s[n];
 	}
 	else
 	{
 		while (i < n)
 		{
-			temp_d[i] = temp_c[n];
+			temp_d[i] = temp_s[n];
 			i++;
 		}
 	}
+	return (dest);
 }

@@ -18,18 +18,14 @@
 
 #include "libft.h"
 
-static char	is_sep(char c, char *charset)
+static char	is_sep(char c, char charset)
 {
-	while (*charset)
-	{
-		if (c == *charset)
-			return (1);
-		charset++;
-	}
+	if (c == charset)
+		return (1);
 	return (0);
 }
 
-static int	count_elements(char *str, char *charset)
+static int	count_elements(char *str, char c)
 {
 	int	i;
 	int	string_counter;
@@ -40,21 +36,21 @@ static int	count_elements(char *str, char *charset)
 	string_counter = 0;
 	while (str[i])
 	{
-		if (is_sep(str[i], charset) && !is_sep(str[i - 1], charset))
+		if (is_sep(str[i], c) && !is_sep(str[i - 1], c))
 			string_counter++;
 		i++;
 	}
-	is_word_last = !is_sep(str[i - 1], charset);
+	is_word_last = !is_sep(str[i - 1], c);
 	res = string_counter + is_word_last;
 	return (res);
 }
 
-static int	calc_len(char *str, char *charset)
+static int	calc_len(char *str, char c)
 {
 	int	len;
 
 	len = 0;
-	while (!is_sep(*str, charset) && *str)
+	while (!is_sep(*str, c) && *str)
 	{
 		str++;
 		len++;
@@ -77,21 +73,21 @@ static char	*cpy_next_word(char *str, int len)
 	return (dest);
 }
 
-char	**ft_split(char *str, char *charset)
+char	**ft_split(char const *s, char c);
 {
 	char	**dest;
 	int		i;
 	int		len;
 	int		word_len;
 
-	len = count_elements(str, charset);
+	len = count_elements(s, c);
 	dest = (char **) malloc((len + 1) * sizeof(char *));
 	i = 0;
-	while (*str)
+	while (*s)
 	{
-		word_len = calc_len(str, charset);
+		word_len = calc_len(s, c);
 		if (word_len > 1)
-			dest[i++] = cpy_next_word(str, word_len);
+			dest[i++] = cpy_next_word(s, word_len);
 		str += word_len;
 	}
 	dest[i] = 0;
