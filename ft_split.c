@@ -18,14 +18,7 @@
 
 #include "libft.h"
 
-static char	is_sep(char c, char charset)
-{
-	if (c == charset)
-		return (1);
-	return (0);
-}
-
-static int	count_elements(char *str, char c)
+static int	count_elements(char const *str, char c)
 {
 	int	i;
 	int	string_counter;
@@ -36,44 +29,26 @@ static int	count_elements(char *str, char c)
 	string_counter = 0;
 	while (str[i])
 	{
-		if (is_sep(str[i], c) && !is_sep(str[i - 1], c))
+		if (str[i] == c && str[i - 1] != c))
 			string_counter++;
 		i++;
 	}
-	is_word_last = !is_sep(str[i - 1], c);
+	is_word_last = str[i - 1] != c;
 	res = string_counter + is_word_last;
 	return (res);
 }
 
-static int	calc_len(char *str, char c)
+static int	calc_len(char const *str, char c)
 {
-	int	len;
+	int	i;
 
-	len = 0;
-	while (!is_sep(*str, c) && *str)
-	{
-		str++;
-		len++;
-	}
+	i = 0;
+	while (str[i] && str[i] != c)
+		i++;
 	return (len + 1);
 }
 
-static char	*cpy_next_word(char *str, int len)
-{
-	int		i;
-	char	*dest;
-
-	dest = (char *) malloc((len + 1) * sizeof(char));
-	if (!dest)
-		return (NULL);
-	i = -1;
-	while (++i < len - 1)
-		dest[i] = str[i];
-	dest[i] = '\0';
-	return (dest);
-}
-
-char	**ft_split(char const *s, char c);
+char	**ft_split(char const *s, char c)
 {
 	char	**dest;
 	int		i;
@@ -87,8 +62,10 @@ char	**ft_split(char const *s, char c);
 	{
 		word_len = calc_len(s, c);
 		if (word_len > 1)
-			dest[i++] = cpy_next_word(s, word_len);
-		str += word_len;
+		{
+			dest[i++] = ft_strdup(s, word_len);
+		}
+		s += word_len;
 	}
 	dest[i] = 0;
 	return (dest);

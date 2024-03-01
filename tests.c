@@ -196,8 +196,8 @@ void test_ft_memmove()
     char result3[8] = "XXXXXXX";
     char expected3[8] = "XXXXXXX";
 
-    ft_memmove(result3 + 3, source3, 4);
-    memmove(expected3 + 3, source3, 4);
+    ft_memmove(result3 + 3, source3, 3);
+    memmove(expected3 + 3, source3, 3);
     result = memcmp(result3, expected3, sizeof(result3)) == 0;
     printf("Test 3: ft_memmove(\"XXXXXXX\" + 3, \"Love You\", 3) - Result: %s, Expected: %s - %s\n",
     	result3, expected3,
@@ -857,12 +857,12 @@ void test_ft_strtrim()
 void test_ft_split()
 {
     // Test case 1: Multiple words, multiple separators
-    char *str1 = "!Hello,World!!This,is,a,,,,,!test!";
-    char *charset1 = ", !";
+    char *str1 = ",Hello,World,,This,is,a,,,,,,test,";
+    char charset1 = ',';
     char **result1 = ft_split(str1, charset1);
     char *expected1[] = {"Hello", "World", "This", "is", "a", "test", 0};
     int result = arrcmp(result1, expected1) == 0;
-    printf("Test 1: ft_split(\"!Hello,Worl<d!!This,is,a,,,,,!test!\", \", !\") - Result: {");
+    printf("Test 1: ft_split(\",Hello,World,,This,is,a,,,,,,test,\", ',') - Result: {");
     print_arr(result1);
     printf("NULL}, Expected: {");
     print_arr(expected1);
@@ -871,11 +871,11 @@ void test_ft_split()
     
     // Test case 2: Multiple words, single separator
     char *str2 = "    I   Love You  ";
-    char *charset2 = " ";
+    char charset2 = ' ';
     char **result2 = ft_split(str2, charset2);
     char *expected2[] = {"I", "Love", "You", 0};
     result = arrcmp(result2, expected2) == 0;
-    printf("Test 2: ft_split(\"    I   Love You  \", \" \") - Result: {");
+    printf("Test 2: ft_split(\"    I   Love You  \", ' ') - Result: {");
     print_arr(result2);
     printf("NULL}, Expected: {");
     print_arr(expected2);
@@ -884,11 +884,11 @@ void test_ft_split()
     
     // Test case 3: Single word
     char *str3 = "42Warsaw";
-    char *charset3 = ",-";
+    char charset3 = "-";
     char **result3 = ft_split(str3, charset3);
     char *expected3[] = {"42Warsaw", 0};
     result = arrcmp(result3, expected3) == 0;
-    printf("Test 3: ft_split(\"42Warsaw\", \",-\") - Result: {");
+    printf("Test 3: ft_split(\"42Warsaw\", '-') - Result: {");
     print_arr(result3);
     printf("NULL}, Expected: {");
     print_arr(expected3);
@@ -897,11 +897,11 @@ void test_ft_split()
     
     // Test case 4: Empty string
     char *str4 = "";
-    char *charset4 = "";
+    char charset4 = ".";
     char **result4 = ft_split(str4, charset4);
     char *expected4[] = {0};
     result = arrcmp(result4, expected4) == 0;
-    printf("Test 4: ft_split(\"\", \"\") - Result: {");
+    printf("Test 4: ft_split(\"\", '.') - Result: {");
     print_arr(result4);
     printf("NULL}, Expected: {");
     print_arr(expected4);
