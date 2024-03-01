@@ -57,7 +57,7 @@ memory_leaks:
 tclean:
 	@rm -f *.txt
 
-bonus-tests:
+bonus_tests:
 	@$(CC) -o bonus_tests.out bonus_tests.c -L. -lft -I./
 	@./bonus_tests.out
 	@rm -f bonus_tests.out
