@@ -18,6 +18,24 @@
 
 #include "libft.h"
 
+static char	*ft_strndup(char const *str, int n)
+{
+	char	*new;
+	int		i;
+
+	new = (char *) malloc((n + 1) * sizeof(char));
+	if (!new)
+		return (0);
+	i = 0;
+	while (i < n && str[i])
+	{
+		new[i] = str[i];
+		i++;
+	}
+	new[i] = 0;
+	return (new);
+}
+
 static int	count_elements(char const *str, char c)
 {
 	int	i;
@@ -27,9 +45,11 @@ static int	count_elements(char const *str, char c)
 
 	i = 1;
 	string_counter = 0;
+	if (!str[0])
+		return (0);
 	while (str[i])
 	{
-		if (str[i] == c && str[i - 1] != c))
+		if (str[i] == c && str[i - 1] != c)
 			string_counter++;
 		i++;
 	}
@@ -44,28 +64,30 @@ static int	calc_len(char const *str, char c)
 
 	i = 0;
 	while (str[i] && str[i] != c)
+	{
 		i++;
-	return (len + 1);
+	}
+	return (i);
 }
 
 char	**ft_split(char const *s, char c)
 {
 	char	**dest;
 	int		i;
-	int		len;
 	int		word_len;
 
-	len = count_elements(s, c);
-	dest = (char **) malloc((len + 1) * sizeof(char *));
+	dest = (char **) malloc((count_elements(s, c) + 1) * sizeof(char *));
 	i = 0;
 	while (*s)
 	{
-		word_len = calc_len(s, c);
-		if (word_len > 1)
+		if (*s != c)
 		{
-			dest[i++] = ft_strdup(s, word_len);
+			word_len = calc_len(s, c);
+			dest[i++] = ft_strndup(s, word_len);
+			s += word_len;
 		}
-		s += word_len;
+		else
+			s++;
 	}
 	dest[i] = 0;
 	return (dest);
