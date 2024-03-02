@@ -4,7 +4,6 @@
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
-//#include "CUnit/Basic.h"
 
 #define RED "\x1b[31m"
 #define GREEN "\x1b[32m"
@@ -884,7 +883,7 @@ void test_ft_split()
     
     // Test case 3: Single word
     char *str3 = "42Warsaw";
-    char charset3 = "-";
+    char charset3 = '-';
     char **result3 = ft_split(str3, charset3);
     char *expected3[] = {"42Warsaw", 0};
     result = arrcmp(result3, expected3) == 0;
@@ -897,7 +896,7 @@ void test_ft_split()
     
     // Test case 4: Empty string
     char *str4 = "";
-    char charset4 = ".";
+    char charset4 = '.';
     char **result4 = ft_split(str4, charset4);
     char *expected4[] = {0};
     result = arrcmp(result4, expected4) == 0;
