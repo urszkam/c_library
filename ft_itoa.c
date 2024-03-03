@@ -18,10 +18,10 @@ static int	ilen(int n)
 
 	if (!n)
 		return (1);
-	if (n > 1)
-		len = 0;
-	else
+	if (n < 0)
 		len = 1;
+	else
+		len = 0;
 	while (n != 0)
 	{
 		n /= 10;
