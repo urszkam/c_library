@@ -584,7 +584,7 @@ void test_ft_strchr()
        char *result4 = ft_strchr("Hello World!", '\0');
        char *expected4 = strchr("Hello World!", '\0');
        result = result4 == expected4;
-       printf("Test 4: ft_strchr(\"Hello World!\", 'o') - Result: %p, Expected: %p - %s\n",
+       printf("Test 4: ft_strchr(\"Hello World!\", '\0') - Result: %p, Expected: %p - %s\n",
               (void *)result4, (void *)expected4,
               result ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
 }
@@ -1118,6 +1118,13 @@ void test_ft_itoa()
     printf("Test 5: ft_itoa(%d) - Result: %s - %s\n", num5, result5,
         num5 == atoi(result5) ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
     free(result5);
+       
+    // Test case 6: One
+    int num6 = 1;
+    char *result6 = ft_itoa(num6);
+    printf("Test 6: ft_itoa(%d) - Result: %s - %s\n", num6, result6,
+        num6 == atoi(result6) ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
+    free(result6);
 }
 
 void test_ft_strmapi()
@@ -1151,7 +1158,7 @@ void test_ft_striteri()
        char *expected1 = "XaXaXabbbbXa!";
        ft_striteri(result1, &a_to_X);
        int result = strcmp(result1, expected1) == 0;
-       printf("Test 1: ft_striteri(\"Hdjik!\", &a_to_X) - Result: %s, Expected: %s - %s\n",
+       printf("Test 1: ft_striteri(\"aaaaaabbbbaa\", &a_to_X) - Result: %s, Expected: %s - %s\n",
               result1, expected1,
               result ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
 
