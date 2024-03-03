@@ -51,7 +51,8 @@ tests:
 memory_leaks:
 	@$(CC) -o tests.out tests.c -L. -lft -I./
 	@touch endl.txt nbr.txt str.txt char.txt 
-	valgrind --leak-check=full ./tests.out
+	valgrind --leak-check=full --show-leak-kinds=all \
+         --track-origins=yes --verbose ./tests.out
 	@rm -f tests.out
 
 tclean:
@@ -59,7 +60,8 @@ tclean:
 
 bonus_tests:
 	@$(CC) -o bonus_tests.out bonus_tests.c -L. -lft -I./
-	@./bonus_tests.out
+	valgrind --leak-check=full --show-leak-kinds=all \
+         --track-origins=yes --verbose ./bonus_tests.out
 	@rm -f bonus_tests.out
 
 .PHONY: clean fclean re all tests bonus_tests
