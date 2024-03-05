@@ -16,7 +16,7 @@ static int	ilen(int n)
 {
 	int	len;
 
-	if (n < 0)
+	if (n <= 0)
 		len = 1;
 	else
 		len = 0;
