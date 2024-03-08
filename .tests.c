@@ -584,7 +584,7 @@ void test_ft_strchr()
        char *result4 = ft_strchr("Hello World!", '\0');
        char *expected4 = strchr("Hello World!", '\0');
        result = result4 == expected4;
-       printf("Test 4: ft_strchr(\"Hello World!\", '\0') - Result: %p, Expected: %p - %s\n",
+       printf("Test 4: ft_strchr(\"Hello World!\", '\\0') - Result: %p, Expected: %p - %s\n",
               (void *)result4, (void *)expected4,
               result ? GREEN "PASS" COLOR_RESET : RED "FAIL" COLOR_RESET);
 }
