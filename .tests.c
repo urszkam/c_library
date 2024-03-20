@@ -1177,7 +1177,7 @@ void test_ft_putchar_fd()
     char c1 = 'a';
     ft_putchar_fd(c1, fd1);
     close(fd1);
-    fd1 = open("char.txt", O_RDONLY | O_CREAT);
+    fd1 = open("char.txt", O_RDONLY);
     char* result1 = (char*)calloc(5, sizeof(char));
     int x = read(fd1, result1, 5);
     int result = c1 == result1[0];
@@ -1199,7 +1199,7 @@ void test_ft_putstr_fd()
     char *str1 = "Hello World!";
     ft_putstr_fd(str1, fd1);
     close(fd1);
-    fd1 = open("str.txt", O_RDONLY | O_CREAT);
+    fd1 = open("str.txt", O_RDONLY);
     char* result1 = (char*)calloc(strlen(str1) + 1, sizeof(char));
     int x = read(fd1, result1, strlen(str1));
     int result = strcmp(result1, str1) == 0;
@@ -1222,7 +1222,7 @@ void test_ft_putendl_fd()
     char *expected1 = "Hello World!\n";
     ft_putendl_fd(str1, fd1);
     close(fd1);
-    fd1 = open("endl.txt", O_RDONLY | O_CREAT);
+    fd1 = open("endl.txt", O_RDONLY);
     char* result1 = (char*) calloc(20, sizeof(char));
     int x = read(fd1, result1, 20);
     int result = strcmp(result1, expected1) == 0;
@@ -1232,12 +1232,12 @@ void test_ft_putendl_fd()
     free(result1);
     
     //Test 1: Output empty string to a .txt file
-    int fd2 = open("endl.txt", O_WRONLY | O_CREAT);
+    int fd2 = open("endl.txt", O_WRONLY);
     char *str2 = "";
     char *expected2 = "\n";
     ft_putendl_fd(str2, fd2);
     close(fd2);
-    fd1 = open("endl.txt", O_RDONLY | O_CREAT);
+    fd1 = open("endl.txt", O_RDONLY);
     char* result2 = (char*) calloc(10, sizeof(char));
     x = read(fd2, result2, strlen(str2)+1);
     result = strcmp(result2, expected2) == 0;
@@ -1261,7 +1261,7 @@ void test_ft_putnbr_fd()
     int n1 = atoi(str1);
     ft_putnbr_fd(n1, fd1);
     close(fd1);
-    fd1 = open("nbr.txt", O_RDONLY | O_CREAT);
+    fd1 = open("nbr.txt", O_RDONLY);
     char* result1 = (char*) calloc(10, sizeof(char));
     int x = read(fd1, result1, strlen(str1));
     int result = strcmp(result1, str1) == 0;
@@ -1276,7 +1276,7 @@ void test_ft_putnbr_fd()
     int n2 = atoi(str2);
     ft_putnbr_fd(n2, fd2);
     close(fd2);
-    fd1 = open("nbr.txt", O_RDONLY | O_CREAT);
+    fd1 = open("nbr.txt", O_RDONLY);
     char* result2 = (char*) calloc(13, sizeof(char));
     x = read(fd2, result2, strlen(str2));
     result = strcmp(result2, str2) == 0;
