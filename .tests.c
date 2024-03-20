@@ -39,9 +39,9 @@ static void a_to_X(unsigned int i, char *c)
 static int  arrcmp(char **arr1, char **arr2)
 {
     int i = 0;
-    while (arr1[i] && arr2[i])
+    while (arr2[i])
     {
-        if (!arr1[i] || !arr2[i] || strcmp(arr1[i], arr2[i]) != 0)
+        if (!arr1[i] || strcmp(arr1[i], arr2[i]) != 0)
             return (-1);
         i++;
     }
